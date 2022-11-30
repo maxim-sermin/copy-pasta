@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <div class="toolbar-container">
+    <img class="homepage-button" (click)="goHome()" src="assets/logo/full.svg"/>
+    <div class="new-recipe-and-user">
+      <ng-container *ngIf="authenticationService.authenticated">
+        <button class="add-button add-button-large" mat-raised-button color="accent" routerLink="/edit/"><mat-icon>add</mat-icon>{{ 'app.newRecipe' | translate }}</button>
+        <button class="add-button add-button-small" mat-mini-fab color="accent" routerLink="/edit/"><mat-icon>add</mat-icon></button>
+      </ng-container>
+      <div [style.background-color]="t.menuOpen ? 'white': 'transparent'" class="logged-in-user noselect" *ngIf="authenticationService.authenticatedUser !== null" [matMenuTriggerFor]="userMenu" #t="matMenuTrigger" matRipple>
+        <app-profile-picture [user]="authenticationService.authenticatedUser" [profilePictureOverride]="authenticationService.profilePicture" [sizePixels]="44"></app-profile-picture>
+        <mat-icon [class.highlighted-icon]="t.menuOpen">keyboard_arrow_down</mat-icon>
+      </div>
+      <mat-menu #userMenu>
+        <mat-spinner *ngIf="authenticationService.authenticated === null" [diameter]="30"></mat-spinner>
+        <ng-container *ngIf="authenticationService.authenticated !== null && authenticationService.authenticated === true">
+          <span *ngIf="authenticationService.authenticatedUser" (click)="$event.stopPropagation()" class="hi-username" mat-menu-item>{{ 'app.hi' | translate }}, {{authenticationService.authenticatedUser.name}} 👋</span>
+          <mat-divider></mat-divider>
+          <div class="language-selector" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="useLanguage(true)"><mat-icon class="chevron-icon chevron-left">chevron_left</mat-icon></button>
+            <img class="language-flag" src="assets/i18n/{{translate.currentLang}}/flag.svg"/>
+            <button mat-icon-button (click)="useLanguage(false)"><mat-icon class="chevron-icon chevron-right">chevron_right</mat-icon></button>
+          </div>
+          <button mat-menu-item routerLink="/settings">{{ 'generic.settings' | translate }}</button>
+          <button mat-menu-item (click)="authenticationService.performLogout()">{{ 'app.logout' | translate }}</button>
+        </ng-container>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
+<router-outlet>
+
+</router-outlet>

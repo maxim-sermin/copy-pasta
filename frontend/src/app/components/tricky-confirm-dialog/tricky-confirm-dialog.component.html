@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{dialogTitle}}</h2>
+<div class="tricky-container">
+  <mat-dialog-content>
+    <div class="content-container">
+      <span class="first-line"><mat-icon class="mat-icon-rtl-mirror warning-icon">warning</mat-icon>{{dialogMessageFirstLine}}<mat-icon class="mat-icon-rtl-mirror warning-icon">warning</mat-icon></span>
+      <span class="second-line">{{'trickyConfirmDialog.prefix' | translate}} "{{confirmString}}" {{'trickyConfirmDialog.suffix' | translate}}</span>
+      <mat-form-field>
+        <mat-label>{{'trickyConfirmDialog.hint' | translate}}</mat-label>
+        <input appBlockPaste type="text" [placeholder]=confirmString matInput [(ngModel)]="confirmInput">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="button-container">
+    <button mat-button [disabled]="confirmString != confirmInput" color="primary" (click)="dialogRef.close(true)">{{'generic.confirm' | translate}}</button>
+    <button mat-raised-button color="warn" (click)="dialogRef.close(false)" class="cancel-button"><mat-icon class="mat-icon-rtl-mirror dialog-action-icons">close</mat-icon>{{'generic.cancel' | translate}}</button>
+  </mat-dialog-actions>
+</div>

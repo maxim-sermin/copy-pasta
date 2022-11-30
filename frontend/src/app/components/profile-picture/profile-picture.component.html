@@ -1,0 +1,6 @@
+<div #profilePicContainer class="profile-picture-container">
+  <img [style.display]="profilePictureOverride || profilePicture ? 'block' : 'none'" [style.object-position]="applicationService.getProfilePictureOffsetSafe(user)" [style.transform]="applicationService.getProfilePictureRotationSafe(user)" [src]="profilePictureOverride ? profilePictureOverride : profilePicture"/>
+  <svg *ngIf="!profilePicture && !profilePictureOverride && user" [data-jdenticon-value]="user.id">
+    {{user.name}}
+  </svg>
+</div>

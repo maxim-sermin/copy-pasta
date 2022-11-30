@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+    hikari:
+      max-lifetime: ${HIKARI_TIMEOUT:600000} #10 minutes wait time
+  servlet:
+    multipart:
+      max-request-size: 1MB
+      max-file-size: 1MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher # PathPattern became default since SB 2.6 and Springfox only support Ant
+server:
+  port: ${PORT}
+  tomcat:
+    threads:
+      max: 30
+web-security:
+  frontend-url: ${FRONTENDURL:#{null}}
+  backend-url: ${BACKENDDURL:#{null}}
+  jwt:
+    expire-time-minutes: ${ACCESS_TOKEN_EXPIRE_MINUTES}
+    refresh-expire-days: ${REFRESH_TOKEN_EXPIRE_DAYS}
+    secret: ${JWTSECRET}
+storage:
+  picPath: ${PICPATH:}
+  useAwsS3: ${USES3:false}
+  amazonProperties:
+    region: eu-central-003
+    accessKey: ${AWS_ACCESS_KEY_ID:}
+    secretKey: ${AWS_SECRET_ACCESS_KEY:}
+    bucketName: copy-pasta-pictures

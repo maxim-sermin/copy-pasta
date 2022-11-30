@@ -1,0 +1,85 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+
+  .zoom-quality-container {
+    display: flex;
+    flex-direction: column;
+
+    .slider-reduction-container {
+      display: flex;
+      align-items: center;
+
+      .sliders-container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      .reduction-container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        margin-bottom: 5px;
+
+        .percentage {
+          font-size: 35px;
+          font-weight: 300;
+        }
+
+        span {
+          text-align: center;
+        }
+      }
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+
+      span {
+        min-width: 73px;
+      }
+
+      mat-slider {
+        margin-left: 10px;
+        width: 100%;
+      }
+    }
+
+    .slider-value {
+      margin-left: 10px;
+    }
+
+    .other-controls-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    mat-button-toggle-group {
+      align-self: flex-end;
+    }
+  }
+
+  .preview-container {
+    overflow: auto;
+
+    .preview {
+      object-fit: contain;
+    }
+  }
+
+  .size-limit {
+    margin-top: 10px;
+  }
+}
+
+.dialog-action {
+  color: white;
+
+  mat-icon {
+    position: relative;
+    bottom: 0px;
+    right: 4px;
+  }
+}

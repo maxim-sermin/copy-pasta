@@ -1,0 +1,21 @@
+<div class="carousel-container">
+  <button mat-mini-fab color="primary" (click)="previousButton()">
+    <mat-icon class="carousel-button-icon carousel-left-button-icon">keyboard_arrow_left</mat-icon>
+  </button>
+  <div class="carousel-content-circles">
+    <div class="carousel-wrapper" [ngStyle]="carouselWrapperStyle">
+      <ul class="carousel-inner" #carousel>
+        <li *ngFor="let item of items;" class="carousel-item">
+          <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
+        </li>
+      </ul>
+    </div>
+    <app-smooth-progress-bar [autoPlayWaitMs]="9 * 1000" (progressBarEnded)="next()"></app-smooth-progress-bar>
+    <div class="circle-container">
+      <div (click)="goToSlideButton(i)" [ngClass]="{'circle': true, 'circle-filled': i == currentSlide}" class="circle" *ngFor="let item of items; let i = index"></div>
+    </div>
+  </div>
+  <button mat-mini-fab color="primary" (click)="nextButton()">
+    <mat-icon class="carousel-button-icon">keyboard_arrow_right</mat-icon>
+  </button>
+</div>

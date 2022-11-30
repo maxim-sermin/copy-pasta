@@ -1,0 +1,99 @@
+@use '~@angular/material' as mat;
+@import "../../../../copy-pasta-theme";
+
+$comment-border-radius: 8px;
+
+.comment-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+
+  .speech-bubble-container {
+    margin-left: 16px;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+
+    .triangle {
+      margin-top: 11px;
+      width: 0;
+      height: 0;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-right: 12px solid $primary-color;
+    }
+
+    .speech-bubble {
+      display: flex;
+      flex-direction: column;
+      border-bottom: solid 1px $primary-color;
+      border-left: solid 1px $primary-color;
+      border-right: solid 1px $primary-color;
+      border-radius: $comment-border-radius;
+      width: 100%;
+
+      .comment-header-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top-left-radius: calc(#{$comment-border-radius} - 1px);
+        border-top-right-radius: calc(#{$comment-border-radius} - 1px);
+        border-bottom: solid 1px mat.get-color-from-palette($copy-pasta-primary-palette, 700);
+        height: 46px;
+        width: 100%;
+        background-color: $primary-color;
+
+        .existing-comment-metas {
+          font-size: 17px;
+          margin-left: 16px;
+          color: white;
+
+          .comment-author {
+            font-weight: bold;
+          }
+        }
+
+        .edit-comment-button {
+          margin-right: 3px;
+          background-color: white;
+
+          mat-icon {
+            position: relative;
+            bottom: 2px;
+          }
+        }
+      }
+
+      .existing-comment-content {
+        margin: 16px;
+        white-space: pre-wrap;
+      }
+
+      .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        margin-right: 16px;
+        margin-left: 16px;
+
+        .delete-comment-placeholder {
+          width: 85px;
+        }
+
+        .delete-comment-button {
+          color: white;
+        }
+
+        .send-comment-button {
+
+        }
+      }
+
+      mat-form-field {
+        margin-top: 16px;
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+    }
+  }
+}

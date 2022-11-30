@@ -1,0 +1,32 @@
+.ingredient-row {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+
+  .ingredient-component {
+    margin-right: 15px;
+  }
+
+  .ingredient-min-width {
+    min-width: 100px;
+  }
+
+  .with-buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+  }
+
+  .narrow-input {
+    width: 68px;
+  }
+
+  .wide-input {
+    width: 100%;
+  }
+
+  .remove-ingredient-button {
+    margin-bottom: 16px;
+  }
+}

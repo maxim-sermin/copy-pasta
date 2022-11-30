@@ -1,0 +1,138 @@
+@use '~@angular/material' as mat;
+@import "../../../../copy-pasta-theme";
+
+$card-size: 240px;
+$identicon-size: 63px; // don't forget to update <app-profile-picture [sizePixels]="60"
+$headerBackgroundColor: darken(mat.get-color-from-palette($copy-pasta-primary-palette, 600, 0.8), 23%);
+$chipsBackgroundColor: darken(mat.get-color-from-palette($copy-pasta-accent-palette, 900, 1), 3%);
+
+.single-recipe-preview {
+  background-image: url("../../../../assets/placeholder_recipe.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 500;
+  margin: 4px;
+  max-width: $card-size;
+  max-height: $card-size;
+  width: $card-size;
+  height: $card-size;
+  padding: 0px;
+  overflow: visible;
+}
+
+.single-recipe-preview:hover {
+  cursor: pointer;
+  transform: translateY(-20px);
+  transition: all .18s ease;
+}
+
+.single-recipe-preview:hover > .header-like-container {
+  transition: all .12s ease;
+  opacity: 0;
+}
+
+.single-recipe-preview:hover > .preview-labels {
+  transition: all .12s ease;
+  transform: translateY(32px);
+
+  mat-chip {
+    background-color: transparent;
+    color: black;
+  }
+}
+
+.single-recipe-preview:hover + .creator-container {
+  transition: all .12s ease;
+  opacity: 0;
+}
+
+.header-like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.preview-header-line {
+  background-color: $headerBackgroundColor;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  font-size: 17px;
+  width: 100%;
+  border-top-left-radius: 4px;
+
+  .preview-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.likes-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2px;
+  padding-right: 10px;
+  padding-bottom: 6px;
+  background-color: $headerBackgroundColor;
+  border-bottom-right-radius: 34px;
+
+  .likes-line {
+    display: flex;
+
+    .heart-emoji {
+      font-size: 18px;
+      margin-left: 1px;
+    }
+
+    .likes-amount {
+      color: white;
+      margin-left: 2px;
+      font-size: 14px;
+    }
+  }
+}
+
+.preview-labels {
+  padding-bottom: 4px;
+  height: 32px; // height of single chip line -> required for consistent layout when no chips are there
+  overflow: hidden;
+
+  ::ng-deep .mat-chip-list-wrapper {
+    flex-wrap: nowrap;
+  }
+
+  mat-chip {
+    white-space: nowrap;
+    background-color: $chipsBackgroundColor;
+    color: white;
+  }
+
+  mat-chip::after {
+    background-color: transparent;
+  }
+}
+
+.creator-container {
+  z-index: 1;
+  position: relative;
+  left: calc(#{$card-size} - (#{$identicon-size} - 26px));
+  bottom: calc(#{$card-size} + #{$identicon-size} * 0.5 - 8px);
+
+  .svg-container {
+    position: absolute;
+    background-color: white;
+    border-radius: $identicon-size;
+    width: $identicon-size;
+    height: $identicon-size;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  }
+}

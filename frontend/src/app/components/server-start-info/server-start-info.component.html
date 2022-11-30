@@ -1,0 +1,19 @@
+<div class="server-status-container">
+  <div class="picture-text-container">
+    <img *ngIf="!serverStarted" class="sleeping-picture" src="assets/server_sleeping.png">
+    <img *ngIf="serverStarted" class="sleeping-picture" src="assets/server_ready.png">
+
+    <div class="text-container">
+      <ng-container *ngIf="!serverStarted">
+        <p *ngIf="!wentOvertime">{{'serverSleep.normal' | translate}}</p>
+        <p *ngIf="wentOvertime">{{'serverSleep.overtime' | translate}} 🤔</p>
+      </ng-container>
+      <p *ngIf="serverStarted">{{'serverSleep.back' | translate}}</p>
+    </div>
+  </div>
+  <ng-container *ngIf="!serverStarted">
+    <app-smooth-progress-bar *ngIf="!wentOvertime" [autoPlayWaitMs]="usualStartTimeSeconds * 1000" (progressBarEnded)="wentOvertime = true"></app-smooth-progress-bar>
+    <mat-progress-bar *ngIf="wentOvertime" color="primary" mode="indeterminate"></mat-progress-bar>
+  </ng-container>
+  <button class="close-button" mat-raised-button color="primary" *ngIf="serverStarted" (click)="dialogRef.close(true)">{{'serverSleep.letsGo' | translate}}</button>
+</div>

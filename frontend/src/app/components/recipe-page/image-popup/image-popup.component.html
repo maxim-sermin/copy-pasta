@@ -1,0 +1,6 @@
+<div class="fullscreen-container">
+  <button class="close-button" mat-mini-fab (click)="dialogRef.close(true)">
+    <mat-icon>close</mat-icon>
+  </button>
+  <img class="fullscreen-image" [style.transform]="'rotate(' + data.metaInfos[data.current].rotation + 'deg)'" [src]="data.images[data.current]"/>
+</div>

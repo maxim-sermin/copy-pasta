@@ -1,0 +1,30 @@
+.icon-container {
+  .back-button {
+    position: relative;
+
+    mat-icon {
+      font-size: 44px;
+      position: relative;
+      right: 12px;
+      bottom: 1px;
+    }
+  }
+}
+
+.icon-container:hover > .back-button {
+  animation-duration: 0.5s;
+  animation-name: back-button;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in;
+}
+
+@keyframes back-button {
+  from {
+    right: 0px;
+  }
+
+  to {
+    right: 14px;
+  }
+}

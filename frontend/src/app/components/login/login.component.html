@@ -1,0 +1,53 @@
+<div class="login-page-container">
+  <mat-card class="login-card">
+    <div class="login-row">
+      <div class="logo-container">
+        <div #imgContainer>
+        </div>
+
+        <div #nameRibbon *ngIf="showSvgName" class="ribbon">
+          {{currentSvgFilenameToDisplayName()}}
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+        <div *ngIf="!showSvgName" class="ribbon-placeholder"></div>
+      </div>
+      <mat-divider class="login-divider" [vertical]="true"></mat-divider>
+      <div class="login-column">
+        <span class="login-header">{{'login.title' | translate}}</span>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="form-container">
+            <mat-form-field>
+              <input type="text" required matInput [placeholder]="'generic.username' | translate" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field>
+              <app-toggle-password #loginPwToggle matSuffix></app-toggle-password>
+              <input [type]="loginPwToggle.type" required matInput [placeholder]="'generic.password' | translate" formControlName="password">
+            </mat-form-field>
+
+            <mat-card #errorBox class="error">
+              <span>{{error}}</span>
+            </mat-card>
+
+            <div class="login-register-container">
+              <div class="biometric-button-container">
+                <div *ngIf="!biometricAvailable"></div>
+                <div *ngIf="biometricAvailable" class="biometric-container">
+                  <mat-icon>fingerprint</mat-icon>
+                  <span>{{'login.biometric.toggle' | translate}}</span>
+                  <mat-slide-toggle formControlName="useBiometric"></mat-slide-toggle>
+                </div>
+                <button mat-raised-button>{{'login.loginButton' | translate}}</button>
+              </div>
+              <button *ngIf="showBiometricLoginButton" type="button" color="primary" class="biometric-login-button" mat-raised-button (click)="performBiometricLogin()"><mat-icon>fingerprint</mat-icon>{{'login.loginButtonBiometric' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <mat-progress-bar *ngIf="loginInProgress" class="login-progress" mode="indeterminate"></mat-progress-bar>
+  </mat-card>
+</div>

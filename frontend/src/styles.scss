@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+@use '~@angular/material' as mat;
+@import "copy-pasta-theme";
+@import "variables";
+@import '~material-design-icons/iconfont/material-icons.css';
+@import 'assets/fonts/roboto/roboto.css';
+
+// those mixins are expensive, so do them here because this file won't be imported anywhere
+@include mat.core();
+@include mat.all-component-themes($copy-pasta-theme);
+
+html, body { height: 100%}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $global-background-color; overflow-x: hidden}
+
+@media screen and (min-width: $mobile-end-width) {
+  .global-page-container {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.global-page-container{
+  padding-bottom: 20px;
+}
+
+.snackbar-theme{
+  background-color: $primary-color;
+  color: white;
+
+  button{
+    background-color: $accent-color;
+    color: white;
+  }
+}
+
+.snackbar-error-theme{
+  background-color: $warn-color;
+  color: white;
+
+  button{
+    background-color: $accent-color;
+    color: white;
+  }
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.global-dialog-class > mat-dialog-container {
+  background-color: #fafafa;
+}
+
+.search-autocomplete {
+  max-height: 50vh !important;
+}
+
+.mat-loading .mat-button-wrapper {
+  visibility: hidden;
+}
+
+.mat-loading .mat-progress-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.remove-step-button-container {
+  width: 40px;
+
+  .remove-step-button {
+    width: 33px;
+    height: 33px;
+
+    mat-icon {
+      margin-top: -4px;
+      font-size: 19px;
+      color: white;
+    }
+  }
+}
+
+.image-popup {
+  mat-dialog-container {
+    background-color: #0d0d0df2;
+  }
+}
+
+.input-with-hint {
+  display: flex;
+  flex-direction: column;
+
+  app-input-length-hint {
+    align-self: flex-end;
+    position: relative;
+    top: -1.25em;
+  }
+}

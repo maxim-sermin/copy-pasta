@@ -1,0 +1,35 @@
+@import "../../../copy-pasta-theme";
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.first-line {
+  font-size: 1.1em;
+  color: $warn-color;
+  margin-bottom: 4px;
+}
+
+.warning-icon {
+  position: relative;
+  top: 5px;
+  margin-left: 11px;
+  margin-right: 9px;
+}
+
+.second-line {
+  margin-bottom: 10px;
+}
+
+.dialog-action {
+  color: white;
+
+  .dialog-action-icons {
+    position: relative;
+    bottom: 0px;
+    right: 4px;
+  }
+}
+

@@ -1,0 +1,13 @@
+@import "../../../copy-pasta-theme";
+
+span {
+  font-size: 75%;
+}
+
+.limit-ok {
+  color: rgba(0,0,0,.54);
+}
+
+.limit-reached {
+  color: $warn-color;
+}

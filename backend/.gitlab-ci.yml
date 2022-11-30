@@ -1,0 +1,37 @@
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - deploy
+
+build:
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+  stage: build
+  image: openjdk:15-jdk-alpine
+  script:
+    - chmod +x ./gradlew
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - ./gradlew bootJar
+  artifacts:
+    paths:
+      - build/libs/*.jar
+
+
+deploy:
+  stage: deploy
+  script:
+    - docker build -t $CI_REGISTRY/copy-pasta1/backend/copy-pasta-backend:latest .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $CI_REGISTRY/copy-pasta1/backend/copy-pasta-backend:latest

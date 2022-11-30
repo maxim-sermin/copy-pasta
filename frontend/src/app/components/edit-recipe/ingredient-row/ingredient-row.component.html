@@ -1,0 +1,37 @@
+<div class="ingredient-row">
+  <ng-content></ng-content>
+  <mat-form-field *ngIf="!amountPersonalPreference" class="ingredient-component narrow-input">
+    <mat-label>{{'edit.ingredients.amount' | translate}}</mat-label>
+    <input type="number" matInput [formControl]="amounts.controls[ingredientIndex]" min="0">
+  </mat-form-field>
+  <div *ngIf="!amountPersonalPreference" class="ingredient-component ingredient-min-width input-with-hint">
+    <mat-form-field>
+      <mat-label>{{'generic.unit.singular' | translate}}</mat-label>
+      <input #unitInput type="text" matInput [formControl]="units.controls[ingredientIndex]" [matAutocomplete]="auto" (focus)="filterUnit()" (ngModelChange)="filterUnit()">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let unit of filteredUnitOptions.value" [value]="unit">{{unit}}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <app-input-length-hint [input]="unitInput"></app-input-length-hint>
+  </div>
+  <div class="ingredient-component ingredient-min-width wide-input input-with-hint">
+    <mat-form-field>
+      <mat-label>{{'generic.ingredient.singular' | translate}}</mat-label>
+      <input #ingredientInput type="text" matInput [formControl]="ingredients.controls[ingredientIndex]" [matAutocomplete]="autoIngredient" (focus)="filterIngredient()" (ngModelChange)="filterIngredient()">
+      <mat-autocomplete #autoIngredient="matAutocomplete">
+        <mat-option *ngFor="let ingredient of filteredIngredientOptions.value" [value]="ingredient">
+          <mat-icon color="primary">spa</mat-icon>
+          {{ingredient}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <app-input-length-hint [input]="ingredientInput"></app-input-length-hint>
+  </div>
+  <div class="with-buttons">
+    <mat-checkbox tabIndex="-1" class="ingredient-component" [formControl]="optionals.controls[ingredientIndex]">{{'generic.optional' | translate}}</mat-checkbox>
+    <mat-checkbox tabIndex="-1" class="ingredient-component" [(ngModel)]="amountPersonalPreference" (change)="toggleAmountDisabled()">{{'generic.toTaste' | translate}}</mat-checkbox>
+    <div class="remove-step-button-container remove-ingredient-button">
+      <button tabIndex="-1" type="button" class="remove-step-button" *ngIf="ingredientIndex>0" color="warn" mat-mini-fab (click)="tryDeleteIngredient()"><mat-icon>close</mat-icon></button>
+    </div>
+  </div>
+</div>

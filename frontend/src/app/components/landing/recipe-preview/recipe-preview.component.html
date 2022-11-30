@@ -1,0 +1,30 @@
+<mat-card (mouseenter)="startAnimation()" (mouseleave)="stopAnimation()" class = "single-recipe-preview noselect" [style.background-image]="imageToShow ? 'url(' + imageToShow + ')' : 'url(../../../../assets/placeholder_recipe.png)'" [routerLink]="['/recipe', recipe.id]">
+  <div class="header-like-container">
+    <div class="preview-header-line">
+      <span class="preview-title" [matTooltip]="recipe.name" matTooltipPosition="above">
+        {{recipe.name}}
+      </span>
+    </div>
+    <div class="likes-container">
+      <div class="likes-line">
+        <span class="heart-emoji">💖</span>
+        <span class="likes-amount">{{recipe.likesAmount}}</span>
+      </div>
+      <div class="likes-line">
+        <span class="heart-emoji">💬</span>
+        <span class="likes-amount">{{recipe.comments.length}}</span>
+      </div>
+    </div>
+  </div>
+
+  <mat-chip-list #previewChipList class="preview-labels">
+    <mat-chip disableRipple (click)="$event.stopPropagation()" *ngFor="let label of recipe.labels">
+      {{label.name}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-card>
+<div *ngIf="recipe.createdBy" class="creator-container">
+  <div class="svg-container">
+    <app-profile-picture [user]="recipe.createdBy" [sizePixels]="63" [matTooltip]="recipe.createdBy.name" matTooltipPosition="below"></app-profile-picture>
+  </div>
+</div>

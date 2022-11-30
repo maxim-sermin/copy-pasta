@@ -1,0 +1,99 @@
+<div class="global-page-container">
+  <form [formGroup]="form" (ngSubmit)="searchRecipes()">
+    <mat-card class="searchbar">
+      <div class="searchbar-button-container">
+        <div class="sort-search-container">
+          <mat-form-field class="searchbar-full-width sort-search-form-field">
+            <mat-label>{{'overview.search.label' | translate}}</mat-label>
+            <mat-icon class="search-icon" matPrefix>search</mat-icon>
+            <input
+              matInput
+              #recipeNameSearchInput
+              placeholder="{{'generic.example' | translate}} {{'generic.recipeExample' | translate}}"
+              formControlName="recipeName"
+              [matAutocomplete]="labelsAutoRecipe"
+              (focus)="focusRecipeName()" (ngModelChange)="filterRecipeName()">
+            <mat-autocomplete class="search-autocomplete" #labelsAutoRecipe="matAutocomplete" (optionSelected)="selectedRecipeNameSuggestion($event)">
+              <mat-option disabled class="suggestions-loading">
+                <mat-progress-bar *ngIf="this.recipeNameSuggestionsLoading" mode="indeterminate"></mat-progress-bar>
+              </mat-option>
+              <mat-option disabled *ngIf="filteredRecipeNames.length < 1 && !this.recipeNameSuggestionsLoading">
+                {{'overview.search.noSuggestions' | translate}}  ¯\_(ツ)_/¯
+              </mat-option>
+              <mat-option *ngFor="let searchTerm of filteredRecipeNames" [value]="searchTerm.name">
+                <mat-icon>restaurant</mat-icon>
+                {{searchTerm.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field class="sort-drop-down" appearance="fill">
+            <mat-label>{{sortingDescending ? ('overview.search.sort.descending' | translate) : ('overview.search.sort.ascending' | translate)}} {{'overview.search.sort.by' | translate}}</mat-label>
+            <mat-select formControlName="sortBy" (ngModelChange)="setSortBy($event)">
+              <mat-option *ngFor="let option of sortOptions" [value]="option">
+                {{('overview.search.sort.options.' + option) | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button class="sort-direction-button" type="button" mat-icon-button (click)="toggleSortDirection()">
+            <mat-icon [style.transform]="'rotate(' + (sortingDescending ? '180' : '0') + 'deg)'">arrow_upward</mat-icon>
+          </button>
+        </div>
+        <mat-form-field *ngIf="form.value.advancedSearch" class="searchbar-full-width">
+          <mat-label>{{'overview.search.advancedLabel' | translate}}</mat-label>
+          <mat-icon class="search-icon" matPrefix>search</mat-icon>
+          <mat-chip-list #labelsChipList>
+            <mat-chip
+              *ngFor="let addedSearchTerm of addedSearchTerms"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="remove(addedSearchTerm)"
+              [matTooltip]="getTooltipFromType(addedSearchTerm)"
+              [ngClass]="addedSearchTerm.type === ComponentSearchSuggestionType.Label ? 'label-chip' : 'ingredient-chip'">
+              <mat-icon class="chip-icon" *ngIf="addedSearchTerm.type === ComponentSearchSuggestionType.Label">local_offer</mat-icon>
+              <mat-icon class="chip-icon" *ngIf="addedSearchTerm.type === ComponentSearchSuggestionType.Ingredient">spa</mat-icon>
+              {{addedSearchTerm.name}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input
+              matInput
+              placeholder="{{'generic.example' | translate}} {{'overview.search.advancedPlaceholder' | translate}}"
+              #advancedSearchInput
+              formControlName="searchTerm"
+              [matAutocomplete]="labelsAuto"
+              [matChipInputFor]="labelsChipList"
+              [matChipInputAddOnBlur]="false"
+              (focus)="focusAdvanced()" (ngModelChange)="filterAdvanced()"
+              (keydown.enter)="searchRecipes()">
+          </mat-chip-list>
+          <mat-autocomplete class="search-autocomplete" #labelsAuto="matAutocomplete" (optionSelected)="selectedAdvancedSuggestion($event)">
+            <mat-option disabled class="suggestions-loading">
+              <mat-progress-bar *ngIf="this.labelSuggestionsLoading || this.ingredientSuggestionsLoading" mode="indeterminate"></mat-progress-bar>
+            </mat-option>
+            <mat-option disabled *ngIf="filteredSearchTerms.length < 1 && !this.labelSuggestionsLoading && !this.ingredientSuggestionsLoading">
+              {{'overview.search.noSuggestions' | translate}}  ¯\_(ツ)_/¯
+            </mat-option>
+            <mat-option *ngFor="let searchTerm of filteredSearchTerms" [value]="searchTerm.name">
+              <mat-icon color="accent" *ngIf="searchTerm.type === ComponentSearchSuggestionType.Label">local_offer</mat-icon>
+              <mat-icon color="primary" *ngIf="searchTerm.type === ComponentSearchSuggestionType.Ingredient">spa</mat-icon>
+              {{searchTerm.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="button-and-checkbox">
+        <button class="search-button" type="submit" color="primary" mat-raised-button><mat-icon>cached</mat-icon>{{'overview.search.button' | translate}}</button>
+        <mat-checkbox formControlName="advancedSearch" (ngModelChange)="setAdvancedSearch($event)">{{'overview.search.advancedCheck' | translate}}</mat-checkbox>
+      </div>
+    </mat-card>
+  </form>
+  <mat-card class = "recipe-preview">
+    <h1>{{'generic.recipe.plural' | translate}}</h1>
+    <div class = "recipe-container">
+      <app-recipe-preview [ngsReveal]="{ delay: recipesService.recipesRevealTimes[i], cleanup: true}" [recipe]="recipe"  *ngFor="let recipe of recipesService.recipes; let i = index"></app-recipe-preview>
+    </div>
+    <div class="end-content-container">
+      <button #loadMoreButton [loading]="recipesService.refreshRunning" [style.display]="!recipesService.reachedEnd && recipesService.recipes.length > 0 ? 'block' : 'none'" class="load-more-button" color="primary" mat-raised-button (click)="fetchMoreRecipes()"><mat-icon>refresh</mat-icon>{{'overview.infiniteScroll.loadMore' | translate}}</button>
+      <p class="end-text" *ngIf="recipesService.reachedEnd">&lt;/{{'overview.infiniteScroll.reachedEnd' | translate}}&gt;</p>
+    </div>
+  </mat-card>
+</div>

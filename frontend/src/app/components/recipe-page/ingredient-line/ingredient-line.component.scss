@@ -1,0 +1,21 @@
+.ingredient-row-multi-line {
+  display: flex;
+  flex-direction: column;
+
+  .ingredient-row-first-line {
+    margin-left: 4px;
+    display: flex;
+
+    .inline-text {
+      display: contents;
+    }
+
+    .span-with-space {
+      margin-right: 0.3em;
+    }
+
+    .personal-preference-text {
+      font-style: italic;
+    }
+  }
+}

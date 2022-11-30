@@ -1,0 +1,262 @@
+@import "../../../copy-pasta-theme";
+$left-column-elements-width: 330px;
+$profile-picture-size: 200px;
+
+@keyframes identicon-jello {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+
+  .header-back-container {
+    display: flex;
+    align-items: center;
+
+    app-back-button {
+      margin-right: 8px;
+    }
+  }
+
+  .wide-button {
+    width: $left-column-elements-width;
+  }
+
+  .own-account-panel {
+
+    .username-identicon-container {
+      display: flex;
+      align-items: flex-end;
+
+      .change-username-container {
+        display: flex;
+        flex-direction: column;
+
+        .new-user-name-field {
+          width: $left-column-elements-width;
+          font-size: 30px;
+
+          mat-form-field {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .picture-with-upload {
+      display: flex;
+      flex-direction: column;
+
+      .delete-image-button {
+        color: white;
+        margin-bottom: 10px;
+
+        mat-icon {
+          position: relative;
+          bottom: 2px;
+          right: 6px;
+        }
+      }
+
+      svg {
+        width: $profile-picture-size;
+      }
+
+      svg:hover {
+        -webkit-animation: identicon-jello 0.9s both;
+        animation: identicon-jello 0.9s both;
+      }
+
+      .offset-sliders-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .profile-picture-container {
+        width: $profile-picture-size;
+        height: $profile-picture-size;
+
+        img {
+          border-radius: 50%;
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .picture-upload-area {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        margin-bottom: 30px;
+
+        .buttons-container {
+          margin-top: 10px;
+
+          .edit-image-button {
+            color: white;
+            margin-right: 6px;
+
+            mat-icon {
+              position: relative;
+              bottom: 2px;
+              right: 5px;
+            }
+          }
+        }
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+
+        span {
+          min-width: 73px;
+        }
+
+        mat-slider {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .change-password-container {
+      display: flex;
+      flex-direction: column;
+
+      mat-form-field {
+        width: $left-column-elements-width;
+        margin-bottom: 10px;
+      }
+    }
+
+    .name-save-button {
+      margin-bottom: 30px;
+
+      mat-icon {
+        position: relative;
+        right: 6px;
+        bottom: 2px;
+      }
+    }
+
+    .delete-account-button {
+      color: white;
+
+      mat-icon {
+        position: relative;
+        right: 5px;
+        bottom: 2px;
+      }
+    }
+
+    .delete-biometric {
+      margin-bottom: 20px;
+
+      .biometric-icon {
+        position: relative;
+        margin-left: 13px;
+        bottom: 1px;
+      }
+    }
+  }
+
+  .create-account-panel {
+
+    .new-user-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .input-with-hint {
+        flex-grow: 1;
+        margin-right: 30px;
+      }
+
+      .add-new-user-button {
+        mat-icon {
+          position: relative;
+          right: 5px;
+          bottom: 2px;
+        }
+      }
+    }
+
+    .existing-user-line {
+      height: 94px;
+
+      .existing-user-line-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .username {
+          font-size: 19px;
+          margin-left: 24px;
+        }
+      }
+    }
+  }
+
+  .manage-ingredients-panel {
+    .existing-ingredient-list {
+      width: 100%;
+
+      .existing-ingredient {
+        display: flex;
+
+        .ingredient-source-field {
+          margin-left: 8px;
+          flex-grow: 1;
+        }
+
+        .open-ingredient-link-placeholder {
+          width: 40px;
+        }
+      }
+    }
+
+    .existing-ingredients-save-button {
+      mat-icon {
+        position: relative;
+        bottom: 2px;
+        right: 4px;
+      }
+    }
+  }
+
+  mat-panel-description {
+    flex-grow: 1;
+    position: relative;
+    top: 3px;
+  }
+}

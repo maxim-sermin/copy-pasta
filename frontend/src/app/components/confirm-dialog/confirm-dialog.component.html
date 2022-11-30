@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{dialogTitle}}</h2>
+<mat-dialog-content>
+  <div class="content-container">
+    <span class="first-line"><mat-icon class="mat-icon-rtl-mirror warning-icon">warning</mat-icon>{{dialogMessageFirstLine}}<mat-icon class="mat-icon-rtl-mirror warning-icon">warning</mat-icon></span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button class="dialog-action" color="primary" (click)="dialogRef.close(false)"><mat-icon class="mat-icon-rtl-mirror dialog-action-icons">close</mat-icon>{{'generic.cancel' | translate}}</button>
+  <button mat-raised-button class="dialog-action" color="warn" (click)="dialogRef.close(true)"><mat-icon class="mat-icon-rtl-mirror dialog-action-icons">check</mat-icon>{{'generic.confirm' | translate}}</button>
+</mat-dialog-actions>

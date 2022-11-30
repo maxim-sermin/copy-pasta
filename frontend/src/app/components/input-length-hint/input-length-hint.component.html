@@ -1,0 +1,1 @@
+<span [ngClass]="input.value.length > textLimit ? 'limit-reached' : 'limit-ok'" *ngIf="input.value.length >= textThreshold">{{input.value.length}} / {{textLimit}}</span>

@@ -1,0 +1,38 @@
+.server-status-container {
+  display: flex;
+  flex-direction: column;
+
+  .picture-text-container {
+    display: flex;
+    align-items: center;
+
+    .sleeping-picture {
+      height: 180px;
+    }
+
+    .text-container {
+      width: 240px;
+
+      p {
+        text-align: center;
+      }
+    }
+  }
+
+  app-smooth-progress-bar {
+    margin-top: 14px;
+    height: 5px;
+    width: 100%;
+    position: relative;
+  }
+
+  mat-progress-bar {
+    margin-top: 14px;
+    height: 5px;
+  }
+
+  .close-button {
+    margin-top: 14px;
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,114 @@
+@use '~@angular/material' as mat;
+@import '../node_modules/@angular/material/theming';
+// Plus imports for other components in your app.
+
+$copy-pasta-primary-palette: (
+  50 : #d3f8e8,
+  100 : #90efc6,
+  200 : #5fe7ad,
+  300 : #21de8d,
+  400 : #1dc47c,
+  500 : #19a96b,
+  600 : #158e5a,
+  700 : #117449,
+  800 : #0d5938,
+  900 : #093e27,
+  A100 : #c2ffe5,
+  A200 : #5cffb9,
+  A400 : #0de88a,
+  A700 : #17c57a,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$copy-pasta-accent-palette: (
+  50 : #fdf8e2,
+  100 : #fbedb7,
+  200 : #f8e287,
+  300 : #f5d657,
+  400 : #f3cd33,
+  500 : #f1c40f,
+  600 : #efbe0d,
+  700 : #edb60b,
+  800 : #ebaf08,
+  900 : #e7a204,
+  A100 : #ffffff,
+  A200 : #fff3da,
+  A400 : #ffe1a7,
+  A700 : #ffd98e,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$copy-pasta-warn-palette: (
+  50 : #ffffff,
+  100 : #ffe9e2,
+  200 : #ffc0aa,
+  300 : #fe8a63,
+  400 : #fe7444,
+  500 : #fe5d26,
+  600 : #fe4608,
+  700 : #e63b01,
+  800 : #c73301,
+  900 : #a92c01,
+  A100 : #ffffff,
+  A200 : #ffcfbe,
+  A400 : #ff8358,
+  A700 : #ff6f3e,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$copy-pasta-primary: mat.define-palette($copy-pasta-primary-palette);
+$copy-pasta-accent:  mat.define-palette($copy-pasta-accent-palette);
+$copy-pasta-warn:    mat.define-palette($copy-pasta-warn-palette);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$copy-pasta-theme: mat.define-light-theme($copy-pasta-primary, $copy-pasta-accent, $copy-pasta-warn);
+
+// get base colors for use in css
+$primary-color: mat.get-color-from-palette(map-get($copy-pasta-theme, primary));
+$accent-color: mat.get-color-from-palette(map-get($copy-pasta-theme, accent));
+$warn-color: mat.get-color-from-palette(map-get($copy-pasta-theme, warn));

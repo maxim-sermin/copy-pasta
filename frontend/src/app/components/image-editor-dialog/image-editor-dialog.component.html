@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{data.fileToUpload.file.name}}</h2>
+<mat-dialog-content>
+  <div class="zoom-quality-container">
+    <div class="slider-reduction-container">
+      <div class="sliders-container">
+        <div class="slider-container">
+          <span>{{'imageEditor.quality' | translate}}</span>
+          <mat-slider min="3" max="100" step="1" [(ngModel)]="quality" (ngModelChange)="handleCompressionSettingsChanged()"></mat-slider>
+        </div>
+        <div class="slider-container">
+          <span>{{'imageEditor.resolution' | translate}}</span>
+          <mat-slider min="0.01" max="1" step="0.01" [(ngModel)]="resolutionFactor" (ngModelChange)="handleCompressionSettingsChanged()"></mat-slider>
+        </div>
+      </div>
+      <div class="reduction-container">
+        <span [style.color]="colorGradient(compressedSize/data.fileToUpload.file.size, {red: 0, green: 255, blue: 0}, {red: 255, green: 0, blue: 0})" class="percentage">{{(compressedSize/data.fileToUpload.file.size * 100).toFixed(1)}}%</span>
+        <span>{{'imageEditor.originalSize' | translate}}</span>
+      </div>
+    </div>
+    <div class="other-controls-container">
+      <div class="slider-container">
+        <span>{{'imageEditor.rotation' | translate}}</span>
+        <mat-slider min="0" max="360" step="90" [(ngModel)]="data.fileToUpload.rotation"></mat-slider>
+        <span class="slider-value">{{data.fileToUpload.rotation}}°</span>
+      </div>
+      <mat-button-toggle-group #group="matButtonToggleGroup">
+        <mat-button-toggle [value]="true">
+          <mat-icon>zoom_in</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle [value]="false">
+          <mat-icon>zoom_out</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <div [style.overflow]="group.value ? 'auto': 'hidden'" class="preview-container">
+    <img #preview [style.height]="group.value ? null: '100%'" [style.transform]="'rotate(' + data.fileToUpload.rotation + 'deg)'" class="preview" [src]="blobURL"/>
+  </div>
+  <div class="size-limit">
+    <span [style.color]="compressedSize > data.maxAllowedSize ? 'red': 'green'">{{'imageEditor.size' | translate}}: {{compressedSize.toLocaleString()}} / {{data.maxAllowedSize.toLocaleString()}} Bytes</span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button class="dialog-action" color="warn" (click)="dialogRef.close(false)"><mat-icon>close</mat-icon>{{'generic.cancel' | translate}}</button>
+  <button [disabled]="compressedSize > data.maxAllowedSize" mat-raised-button class="dialog-action" color="primary" (click)="confirmEditing()"><mat-icon>check</mat-icon>{{'generic.done' | translate}}</button>
+</mat-dialog-actions>

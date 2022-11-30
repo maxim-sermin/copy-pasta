@@ -1,0 +1,598 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: miri
+      changes:
+        - createTable:
+            tableName: tool
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: tool_recipe_map
+            columns:
+              - column:
+                  name: tool_fk
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - createTable:
+            tableName: label
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: label_recipe_map
+            columns:
+              - column:
+                  name: label_fk
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - createTable:
+            tableName: recipe
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(15383)
+        - createTable:
+            tableName: quantity
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: amount
+                  type: float
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ingredient_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unit_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: ingredient
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: source
+                  type: varchar(10000)
+        - createTable:
+            tableName: unit
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: tool_fk
+            baseTableName: tool_recipe_map
+            constraintName: tool_toolrecipemap_fk
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: tool
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: tool_recipe_map
+            constraintName: recipe_toolrecipemap_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+        - addForeignKeyConstraint:
+            baseColumnNames: label_fk
+            baseTableName: label_recipe_map
+            constraintName: label_labelrecipemap_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: label
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: label_recipe_map
+            constraintName: recipe_labelrecipemap_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+        - addForeignKeyConstraint:
+            baseColumnNames: ingredient_fk
+            baseTableName: quantity
+            constraintName: ingredient_quantity_fk
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: ingredient
+        - addForeignKeyConstraint:
+            baseColumnNames: unit_fk
+            baseTableName: quantity
+            constraintName: unit_quantity_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: unit
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: quantity
+            constraintName: recipe_quantity_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+  - changeSet:
+      id: 2
+      author: miri
+      changes:
+        - addColumn:
+            - tableName: recipe
+              columns:
+                - column:
+                    name: servings
+                    type: smallint
+                    defaultValue: 1
+                    constraints:
+                      nullable: false
+  - changeSet:
+      id: 3
+      author: max
+      changes:
+        - dropTable:
+            tableName: tool_recipe_map
+        - dropTable:
+            tableName: tool
+  - changeSet:
+      id: 4
+      author: max
+      changes:
+        - createTable:
+            tableName: pics
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(15383)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: internal_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: pics
+            constraintName: recipe_pic_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+  - changeSet:
+      id: 5
+      author: max
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+        - addColumn:
+            - tableName: recipe
+              columns:
+                - column:
+                    name: created_by_user_fk
+                    type: bigint
+                - column:
+                    name: last_modified_by_user_fk
+                    type: bigint
+                - column:
+                    name: last_modified_at
+                    type: timestamp
+                    constraints:
+                      nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: created_by_user_fk
+            baseTableName: recipe
+            constraintName: recipe_user_created_fk
+            onDelete: SET NULL # dont delete recipes when user gets deleted
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: users
+        - addForeignKeyConstraint:
+            baseColumnNames: last_modified_by_user_fk
+            baseTableName: recipe
+            constraintName: recipe_user_last_modified_fk
+            onDelete: SET NULL # dont delete recipes when user gets deleted
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 6
+      author: max
+      changes:
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: name
+  - changeSet:
+      id: 7
+      author: max
+      changes:
+        - createTable:
+            tableName: steps
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(15383)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ordering
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: steps
+            constraintName: recipe_step_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+  - changeSet:
+      id: 8
+      author: max
+      changes:
+        - addColumn:
+            - tableName: pics
+              columns:
+                - column:
+                    name: rotation
+                    type: smallint
+                    defaultValue: 0
+                    constraints:
+                      nullable: false
+  - changeSet:
+      id: 9
+      author: max
+      changes:
+        - addColumn:
+            - tableName: quantity
+              columns:
+                - column:
+                    name: optional
+                    type: boolean
+                    defaultValueBoolean: false
+                    constraints:
+                      nullable: false
+  - changeSet:
+      id: 10
+      author: max
+      changes:
+        -  dropNotNullConstraint:
+             columnDataType: float
+             columnName: amount
+             tableName: quantity
+        -  dropNotNullConstraint:
+             columnDataType: bigint
+             columnName: unit_fk
+             tableName: quantity
+  - changeSet:
+      id: 11
+      author: max
+      changes:
+        - addColumn:
+            - tableName: quantity
+              columns:
+                - column:
+                    name: ordering
+                    type: smallint
+                    defaultValue: 0
+                    constraints:
+                      nullable: false
+  - changeSet:
+      id: 12
+      author: max
+      changes:
+        - addUniqueConstraint:
+            tableName: unit
+            columnNames: name
+        - addUniqueConstraint:
+            tableName: recipe
+            columnNames: name
+        - addUniqueConstraint:
+            tableName: label
+            columnNames: name
+        - addUniqueConstraint:
+            tableName: ingredient
+            columnNames: name
+  - changeSet:
+      id: 13
+      author: max
+      changes:
+        -  dropNotNullConstraint:
+             columnDataType: bigint
+             columnName: recipe_fk
+             tableName: pics
+        - addColumn:
+            - tableName: users
+              columns:
+                - column:
+                    name: pic_fk
+                    type: bigint
+  - changeSet:
+      id: 14
+      author: max
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: pic_fk
+            baseTableName: users
+            constraintName: pic_users_fk
+            onDelete: SET NULL
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: pics
+  - changeSet:
+      id: 15
+      author: max
+      changes:
+        - addColumn:
+            - tableName: users
+              columns:
+                - column:
+                    name: pic_offset_x
+                    type: smallint
+                    defaultValue: 50
+                    constraints:
+                      nullable: false
+                - column:
+                    name: pic_offset_y
+                    type: smallint
+                    defaultValue: 50
+                    constraints:
+                      nullable: false
+  - changeSet:
+      id: 16
+      author: max
+      changes:
+        - addColumn:
+            - tableName: pics
+              columns:
+                - column:
+                    name: user_fk
+                    type: bigint
+        - addForeignKeyConstraint:
+            baseColumnNames: user_fk
+            baseTableName: pics
+            constraintName: user_pics_fk
+            onDelete: SET NULL
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 17
+      author: max
+      changes:
+        - dropColumn:
+            columnName: last_modified_by_user_fk
+            tableName: recipe
+  - changeSet:
+      id: 18
+      author: max
+      changes:
+        - createTable:
+            tableName: likes
+            columns:
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: likes
+            constraintName: recipe_like_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+        - addForeignKeyConstraint:
+            baseColumnNames: user_fk
+            baseTableName: likes
+            constraintName: user_like_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: users
+        -  addPrimaryKey:
+             columnNames: recipe_fk, user_fk
+             tableName: likes
+        - addColumn:
+            - tableName: recipe
+              columns:
+                - column:
+                    name: likes_amount
+                    type: bigint
+                    defaultValue: 0
+                    constraints:
+                      nullable: false
+  - changeSet:
+      id: 19
+      author: max
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: recipe_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_fk
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar(15383)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: recipe_fk
+            baseTableName: comments
+            constraintName: recipe_comment_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: recipe
+        - addForeignKeyConstraint:
+            baseColumnNames: user_fk
+            baseTableName: comments
+            constraintName: user_comment_fk
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 20
+      author: max
+      changes:
+        -  modifyDataType:
+             tableName: ingredient
+             columnName: source
+             newDataType: varchar(15000)

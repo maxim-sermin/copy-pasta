@@ -1,0 +1,368 @@
+{
+  "app": {
+    "hi": "Hi",
+    "logout": "Logout",
+    "newRecipe": "Add recipe"
+  },
+  "datePipe": {
+    "ago": "ago",
+    "in": "in",
+    "intervals": {
+      "day": {
+        "plural": "days",
+        "singular": "day"
+      },
+      "hour": {
+        "plural": "hours",
+        "singular": "hour"
+      },
+      "minute": {
+        "plural": "minutes",
+        "singular": "minute"
+      },
+      "month": {
+        "plural": "months",
+        "singular": "month"
+      },
+      "second": {
+        "plural": "seconds",
+        "singular": "second"
+      },
+      "week": {
+        "plural": "weeks",
+        "singular": "week"
+      },
+      "year": {
+        "plural": "years",
+        "singular": "year"
+      }
+    },
+    "justNow": "just now"
+  },
+  "edit": {
+    "banner": {
+      "change": "Update",
+      "new": "New"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "I found this old family recipe behind the couch while cleaning up..."
+    },
+    "dialogs": {
+      "ingredientDelete": {
+        "body": "You already edited the ingredient you want to delete",
+        "title": "Really delete this ingredient?"
+      },
+      "recipeDelete": {
+        "title": "Really delete this recipe?"
+      },
+      "stepDelete": {
+        "body": "You already edited the step you want to delete",
+        "title": "Really delete this step?"
+      }
+    },
+    "ingredients": {
+      "addIngredient": "Add ingredient",
+      "amount": "Amount",
+      "hintPrefix": "Go to the",
+      "hintSuffix": "to add links to sources for the ingredients",
+      "servings": "Servings"
+    },
+    "labels": {
+      "placeholder": "vegan"
+    },
+    "pictures": {
+      "buttons": {
+        "edit": "Edit",
+        "remove": "Remove"
+      },
+      "chips": {
+        "duplicate": "duplicate",
+        "edited": "edited",
+        "tooLarge": "too large"
+      },
+      "existing": "Previously uploaded pictures",
+      "new": "Add new pictures",
+      "willDelete": "Will be deleted"
+    },
+    "snack": {
+      "duplicateRecipe": {
+        "prefix": "There is already a recipe with the name",
+        "suffix": "- please choose a different name"
+      },
+      "pictureUpload": "Please keep the browser window open while your pictures are being uploaded"
+    },
+    "steps": {
+      "addStep": "Add step",
+      "placeholder": "Peel carrots"
+    },
+    "title": {
+      "label": "Title"
+    },
+    "tooltip": {
+      "addShortCut": "Hint: You can also press the '+' button"
+    }
+  },
+  "generic": {
+    "account": "Account",
+    "backButtonTooltip": "Back to overview",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "couldNotDelete": {
+      "plural": "could not be deleted",
+      "singular": "could not be deleted"
+    },
+    "couldNotLoad": {
+      "plural": "could not be loaded",
+      "singular": "could not be loaded"
+    },
+    "couldNotSave": {
+      "plural": "could not be saved",
+      "singular": "could not be saved"
+    },
+    "couldNotUpdate": {
+      "plural": "could not be updated",
+      "singular": "could not be updated"
+    },
+    "couldNotUpload": {
+      "plural": "could not be uploaded",
+      "singular": "could not be uploaded"
+    },
+    "delete": "Delete",
+    "done": "Done",
+    "edit": "edit",
+    "example": "e.g.",
+    "ingredient": {
+      "plural": "Ingredients",
+      "singular": "Ingredient"
+    },
+    "label": {
+      "plural": "Labels",
+      "singular": "Label"
+    },
+    "new": "new",
+    "noUndo": "This operation cannot be undone (data loss)",
+    "notOk": "Oh no!",
+    "ok": "Alright",
+    "optional": "Optional",
+    "password": "Password",
+    "passwordHint": "Must be at least 8 characters long",
+    "picture": {
+      "plural": "Pictures",
+      "singular": "Picture"
+    },
+    "profilePicture": "Profile picture",
+    "recipe": {
+      "plural": "Recipes",
+      "singular": "Recipe"
+    },
+    "recipeExample": "Chickpeas bolognese",
+    "save": "Save",
+    "settings": "Settings",
+    "step": {
+      "plural": "Steps",
+      "singular": "Step"
+    },
+    "toTaste": "To taste",
+    "unit": {
+      "plural": "Units",
+      "singular": "Unit"
+    },
+    "update": "Update",
+    "updated": "Updated",
+    "upload": "Upload",
+    "user": {
+      "plural": "Users",
+      "singular": "User"
+    },
+    "username": "Username",
+    "wasAdded": {
+      "plural": "were successfully added",
+      "singular": "was successfully added"
+    },
+    "wasDeleted": {
+      "plural": "were successfully deleted",
+      "singular": "was successfully deleted"
+    },
+    "wasSaved": {
+      "plural": "were successfully saved",
+      "singular": "was successfully saved"
+    },
+    "wasUpdated": {
+      "plural": "were successfully updated",
+      "singular": "was successfully updated"
+    },
+    "wasUploaded": {
+      "plural": "were successfully uploaded",
+      "singular": "was successfully uploaded"
+    }
+  },
+  "imageEditor": {
+    "originalSize": "of original size",
+    "quality": "Quality",
+    "resolution": "Resolution",
+    "rotation": "Rotation",
+    "size": "Size"
+  },
+  "login": {
+    "errors": {
+      "enterCreds": "Please enter username and password",
+      "genericError": "Something went wrong, please try again later",
+      "unavailable": "Could not reach the server, please try again later",
+      "wrongCreds": "Username or password incorrect (case sensitive)"
+    },
+    "loginButton": "Sign-in",
+    "loginButtonBiometric": "Biometric sign-in",
+    "title": "Login",
+    "biometric": {
+      "toggle": "Store biometric data",
+      "promptSubTitle": "Verify identity to sign in",
+      "verifyError": "Could not verify biometric identity",
+      "storeError": "Could not store biometric identity",
+      "notAvailable": "Biometric features are not available",
+      "storePromptSubTitle": "Verify identity to store biometric data"
+    }
+  },
+  "notFound": {
+    "safety": "Back to safety!",
+    "title": "This is not the page you are looking for"
+  },
+  "overview": {
+    "infiniteScroll": {
+      "loadMore": "Load more",
+      "reachedEnd": "you've reached the end of the internet"
+    },
+    "search": {
+      "advancedCheck": "Advanced",
+      "advancedLabel": "Advanced search",
+      "advancedPlaceholder": "quick or carrots",
+      "button": "Search",
+      "label": "Search",
+      "noSuggestions": "I just don't have it",
+      "sort": {
+        "ascending": "Ascending",
+        "by": "by",
+        "descending": "Descending",
+        "options": {
+          "date": "Date",
+          "likes": "Likes"
+        }
+      }
+    },
+    "snack": {
+      "ingredientSuggestions": "Ingredient suggestions",
+      "labelSuggestions": "Label suggestions",
+      "recipeSuggestions": "Recipe name suggestions"
+    }
+  },
+  "recipe": {
+    "comments": {
+      "comment": "Comment",
+      "commentButton": "Comment",
+      "dialog": {
+        "delete": {
+          "title": "Really delete this comment?"
+        }
+      },
+      "doComment": {
+        "past": "commented",
+        "present": "comments"
+      },
+      "label": "Write a comment",
+      "placeholder": "I just cooked this and must really say it tastes amazing!",
+      "rightNow": "right now",
+      "snack": {
+        "couldNotPost": "could not be posted"
+      },
+      "somebody": "Somebody"
+    },
+    "createdTooltip": "Created by",
+    "fullScreenTooltip": "Open full screen"
+  },
+  "routeGuard": {
+    "dialog": {
+      "body": "You made changes on this page that will get lost",
+      "title": "Discard changes and proceed?"
+    }
+  },
+  "serverSleep": {
+    "back": "Server back online, yeah",
+    "letsGo": "Let's go!",
+    "normal": "Server sleeping - I'll wake it up",
+    "overtime": "This is taking longer than usual"
+  },
+  "settings": {
+    "dialog": {
+      "deleteAccount": {
+        "title": "Really delete account?"
+      },
+      "deleteProfilePicture": {
+        "body": "Will be gone forever",
+        "title": "Really delete your profile picture?"
+      },
+      "updateIngredients": {
+        "body": "All previous values will be overwritten with the new ones",
+        "title": "Really update existing ingredients?"
+      }
+    },
+    "ingredients": {
+      "linkPlaceholder": "Link for the ingredient",
+      "listIngredients": "List of existing ingredients",
+      "namePlaceholder": "Name of the ingredient",
+      "openLink": "Open link in new window",
+      "title": "Edit existing ingredients"
+    },
+    "myAccount": {
+      "deleteAccount": {
+        "button": "I don't want to use this website ever again",
+        "title": "Delete account"
+      },
+      "password": {
+        "changePassword": "Change password",
+        "newPassword": "New password",
+        "savePassword": "Save password"
+      },
+      "profilePicture": {
+        "changeProfilePicture": "Change profile picture",
+        "offset": {
+          "horizontal": "Horizontal",
+          "title": "Offset",
+          "vertical": "Vertical"
+        }
+      },
+      "title": "My account",
+      "username": {
+        "changeUsername": "Change username",
+        "newUsername": "New username",
+        "saveUsername": "Save username"
+      },
+      "biometric": {
+        "deleteButton": "Delete biometric data",
+        "promptSubTitle": "Verify identity to delete",
+        "snack": {
+          "deleteSuccess": "Biometric data successfully deleted",
+          "deleteFail": "Biometric data could not be deleted"
+        }
+      }
+    },
+    "otherAccounts": {
+      "addUserButton": "Add user",
+      "data": "Data for new user",
+      "existing": "already registered users",
+      "initial": {
+        "form1": "Initial",
+        "form2": "Initial"
+      },
+      "title": "Add new users"
+    },
+    "snack": {
+      "alreadyTaken": "is already taken",
+      "profilePictureUpload": "Please keep the browser window open while your profile pictures is being uploaded"
+    }
+  },
+  "trickyConfirmDialog": {
+    "hint": "Type in exactly as above",
+    "prefix": "To confirm, type in",
+    "suffix": "below"
+  }
+}

@@ -1,0 +1,7 @@
+{
+	"appId": "com.mnm.copypasta",
+	"appName": "Copy Pasta",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+  "loggingBehavior": "none"
+}

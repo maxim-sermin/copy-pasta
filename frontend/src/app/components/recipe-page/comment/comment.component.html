@@ -1,0 +1,27 @@
+<div class="comment-container">
+  <app-profile-picture *ngIf="(existingComment && existingComment.user) || (!existingComment && authenticationService.authenticatedUser)" [user]="existingComment ? existingComment.user : authenticationService.authenticatedUser" [profilePictureOverride]="existingComment ? undefined : authenticationService.profilePicture" [sizePixels]="45"></app-profile-picture>
+  <div class="speech-bubble-container">
+    <div class="triangle"></div>
+    <div class="speech-bubble">
+      <div class="comment-header-bar">
+        <div class="existing-comment-metas">
+          <span class="comment-author">{{existingComment ? (existingComment.user ? existingComment.user.name : ('recipe.comments.somebody' | translate)) : (authenticationService.authenticatedUser ? authenticationService.authenticatedUser.name : '')}}</span> {{existingComment ? ('recipe.comments.doComment.past' | translate) : ('recipe.comments.doComment.present' | translate)}} <span [matTooltip]="existingComment ? existingComment.commentTime : ''" matTooltipPosition="above">{{existingComment ? (existingComment.commentTime | dateAgo) : ('recipe.comments.rightNow' | translate)}}</span>
+        </div>
+        <button *ngIf="existingComment && existingComment.user && existingComment.user.id === authenticationService.authenticatedUser.id" class="edit-comment-button" mat-mini-fab (click)="toggleEditing()"><mat-icon>{{!editMode ? 'edit': 'close'}}</mat-icon></button>
+      </div>
+      <span [innerHTML]="existingComment.content | linkify" class="existing-comment-content" *ngIf="!editMode && existingComment"></span>
+      <div *ngIf="editMode" class="input-with-hint">
+        <mat-form-field >
+          <mat-label>{{'recipe.comments.label' | translate}}</mat-label>
+          <textarea #commentInput matInput [formControl]="commentContent" [placeholder]="'recipe.comments.placeholder' | translate"></textarea>
+        </mat-form-field>
+        <app-input-length-hint [input]="commentInput" [longText]="true"></app-input-length-hint>
+      </div>
+      <div *ngIf="editMode" class="action-buttons">
+        <div *ngIf="!existingComment" class="delete-comment-placeholder"></div>
+        <button *ngIf="existingComment" class="delete-comment-button" color="warn" mat-raised-button (click)="tryDeleteComment()">{{'generic.delete' | translate}}</button>
+        <button [disabled]="!commentContent.valid" class="send-comment-button" color="primary" mat-raised-button (click)="existingComment ? commentUpdated.emit({id: existingComment.id, content: commentContent.value}) : commentAdded.emit(commentContent.value)">{{existingComment ? ('generic.update' | translate) : ('recipe.comments.commentButton' | translate)}}</button>
+      </div>
+    </div>
+  </div>
+</div>

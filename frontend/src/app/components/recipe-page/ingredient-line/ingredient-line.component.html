@@ -1,0 +1,9 @@
+<div class="ingredient-row-multi-line">
+  <div class="ingredient-row-first-line">
+    <span class="inline-text" *ngIf="quantity.amount">{{quantity.amount}}&nbsp;</span>
+    <span class="inline-text" *ngIf="quantity.unit">{{quantity.unit.name}}&nbsp;</span>
+    <span class="inline-text" *ngIf="!quantity.ingredient.source">{{quantity.ingredient.name}}</span>
+    <a *ngIf="quantity.ingredient.source" class="inline-text" target="_blank" [href]="quantity.ingredient.source">{{quantity.ingredient.name}}</a>
+    <span class="inline-text personal-preference-text" *ngIf="!quantity.amount && !quantity.unit">, {{'generic.toTaste' | translate}}</span>
+  </div>
+</div>

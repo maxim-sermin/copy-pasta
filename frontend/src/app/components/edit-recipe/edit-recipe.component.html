@@ -1,0 +1,172 @@
+<div class="global-page-container">
+  <form [formGroup]="form">
+    <mat-card class="recipe-name-container" *ngIf="!editingExistingRecipe || (!editingExistingRecipe.createdBy || editingExistingRecipe.createdBy.id === authenticationService.authenticatedUser.id)">
+      <div class="ribbon ribbon-top-right"><span class="noselect">{{editingExistingRecipe !== null ? ("generic.edit" | translate) : ("generic.new" | translate)}}</span></div>
+      <div class="recipe-name input-with-hint">
+        <mat-form-field>
+          <mat-label>{{'edit.title.label' | translate}}</mat-label>
+          <input #title matInput formControlName="recipeName" placeholder="{{'generic.example' | translate}} {{'generic.recipeExample' | translate}}">
+        </mat-form-field>
+        <app-input-length-hint [input]="title"></app-input-length-hint>
+      </div>
+      <div class="labels-chip-list input-with-hint">
+        <mat-form-field>
+          <mat-label>{{'generic.label.plural' | translate}}</mat-label>
+          <mat-chip-list #labelsChipList >
+            <mat-chip
+              *ngFor="let label of labels"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="remove(label)">
+              {{label.name}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="{{'generic.example' | translate}} {{'edit.labels.placeholder' | translate}}"
+              #labelsInput
+              formControlName="labels"
+              [matAutocomplete]="labelsAuto"
+              [matChipInputFor]="labelsChipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="false"
+              (matChipInputTokenEnd)="add()" (focus)="filterLabels()" (ngModelChange)="filterLabels()">
+          </mat-chip-list>
+          <mat-autocomplete #labelsAuto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let label of filteredLabels.value" [value]="label">
+              <mat-icon color="accent">local_offer</mat-icon>
+              {{label}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <app-input-length-hint [input]="labelsInput"></app-input-length-hint>
+      </div>
+      <div class="description-container input-with-hint">
+        <mat-form-field>
+          <mat-label>{{'edit.description.label' | translate}}</mat-label>
+          <textarea #description matInput formControlName="description" placeholder="{{'edit.description.placeholder' | translate}}"></textarea>
+        </mat-form-field>
+        <app-input-length-hint [input]="description" [longText]="true"></app-input-length-hint>
+      </div>
+    </mat-card>
+
+    <mat-card class="recipe-details-container">
+      <ng-container *ngIf="editingExistingRecipe !== null && editingExistingRecipe.pics.length > 0">
+        <h2>{{'edit.pictures.existing' | translate}}</h2>
+        <div class="existing-pictures-container">
+          <ng-container *ngFor="let pic of editingExistingRecipe.pics; let i = index">
+            <div (click)="togglePictureForDeletion(i)" class="existing-picture-container" *ngIf="!editingExistingRecipe.createdBy || editingExistingRecipe.createdBy.id === authenticationService.authenticatedUser.id || (pic.uploadedBy && pic.uploadedBy.id === authenticationService.authenticatedUser.id)">
+              <mat-spinner *ngIf="picturesAlreadyUploaded[i] === null"></mat-spinner>
+              <img [style.transform]="'rotate(' + editingExistingRecipe.pics[i].rotation + 'deg)'" class="existing-image" [src]="picturesAlreadyUploaded[i]" *ngIf="picturesAlreadyUploaded[i] !== null"/>
+              <div class="image-overlay" [ngClass]="{'overlay-undo-delete': picturesAlreadyUploadedDelete[i]}">
+                <div class="overlay-content noselect">
+                  <mat-icon *ngIf="!picturesAlreadyUploadedDelete[i]">delete</mat-icon>
+                  <mat-icon class="undo-delete-icon" *ngIf="picturesAlreadyUploadedDelete[i]">replay</mat-icon>
+                </div>
+              </div>
+              <div class="will-delete-container" *ngIf="picturesAlreadyUploadedDelete[i]">
+                <mat-icon class="noselect">delete</mat-icon>
+                {{'edit.pictures.willDelete' | translate}}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <div class="upload-drop-zone" (click)="fileInput.click()" appDragDrop (onFileDropped)="addAttachment($event)" [acceptImageTypes]="ACCEPT_IMAGE_TYPES">
+        <input multiple hidden type="file" #fileInput (change)="addAttachment($event.target.files)" [accept]="ACCEPT_IMAGE_TYPES.join(',')">
+        <div class="text-icon-container">
+          <div class="text-container large-text">
+            {{'edit.pictures.new' | translate}}
+          </div>
+          <mat-icon class="upload-icon noselect">cloud_upload</mat-icon>
+        </div>
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let uploadFile of uploadFiles; last as last">
+          <div class="upload-line">
+            <div class="name-with-chips">
+              <span>{{uploadFile.file.name}}</span>
+              <mat-chip-list class="warn-chip-list">
+                <mat-chip class="chip-warn" *ngIf="uploadFile.isDuplicate">{{'edit.pictures.chips.duplicate' | translate}}</mat-chip>
+                <mat-chip class="chip-warn" *ngIf="uploadFile.isTooLarge">{{'edit.pictures.chips.tooLarge' | translate}}</mat-chip>
+                <mat-chip class="chip-primary" *ngIf="uploadFile.compressedData">{{'edit.pictures.chips.edited' | translate}}</mat-chip>
+              </mat-chip-list>
+              <div class="progress-bar">
+                <mat-progress-bar *ngIf="uploadFile.uploadProgress > 0" [color]="statusToColor(uploadFile.uploadStatus)" [value]="uploadFile.uploadProgress"></mat-progress-bar>
+                <mat-icon *ngIf="uploadFile.uploadStatus == UploadStatus.success" class="upload-status-icon upload-successful">check_circle</mat-icon>
+                <mat-icon *ngIf="uploadFile.uploadStatus == UploadStatus.failed" class="upload-status-icon upload-failed">cancel</mat-icon>
+              </div>
+            </div>
+            <div class="buttons-container">
+              <ng-container *ngIf="!uploadFile.isDuplicate && !uploadFile.isTooLarge">
+                <button type="button" color="primary" mat-stroked-button class="edit-image-button" (click)="openImageEditorDialog(uploadFile)"><mat-icon>edit</mat-icon>{{'edit.pictures.buttons.edit' | translate}}</button>
+                <button type="button" color="primary" mat-stroked-button (click)="deleteAttachment(uploadFile)" class="delete-button"><mat-icon>delete</mat-icon>{{'edit.pictures.buttons.remove' | translate}}</button>
+              </ng-container>
+              <ng-container *ngIf="uploadFile.isDuplicate || uploadFile.isTooLarge">
+                <button type="button" color="accent" mat-raised-button class="edit-image-button button-highlight" (click)="openImageEditorDialog(uploadFile)" *ngIf="!uploadFile.isDuplicate"><mat-icon>edit</mat-icon>{{'edit.pictures.buttons.edit' | translate}}</button>
+                <button type="button" color="accent" mat-raised-button class="delete-button button-highlight" (click)="deleteAttachment(uploadFile)"><mat-icon>delete</mat-icon>{{'edit.pictures.buttons.remove' | translate}}</button>
+              </ng-container>
+            </div>
+          </div>
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+    <mat-card class="recipe-details-container">
+      <ng-container *ngIf="!editingExistingRecipe || (!editingExistingRecipe.createdBy || editingExistingRecipe.createdBy.id === authenticationService.authenticatedUser.id)">
+        <div class="header-button-container">
+          <h2>{{'generic.ingredient.plural' | translate}}</h2>
+          <div class="info-text">
+            <mat-icon>info</mat-icon>
+            <span>{{'edit.ingredients.hintPrefix' | translate}} <a target="_blank" href="settings">{{'generic.settings' | translate}}</a> {{'edit.ingredients.hintSuffix' | translate}}</span>
+          </div>
+        </div>
+        <mat-form-field class="servings">
+          <mat-label>{{'edit.ingredients.servings' | translate}}</mat-label>
+          <input type="number" matInput formControlName="servings" min="1">
+        </mat-form-field>
+        <div cdkDropList class="step-list ingredient-container" (keydown.+)="$event.preventDefault(); addIngredient(false)" (cdkDropListDropped)="reorderQuantity($event)">
+          <app-ingredient-row class="step-box" *ngFor = "let amount of amounts.controls; index as i" [amounts]="amounts" [units]="units" [ingredients]="ingredients" [optionals]="optionals" [unitOptions]="unitOptions" [ingredientOptions]="ingredientOptions" [ingredientIndex]="i" (ingredientRemoved)="removeIngredient($event)" cdkDrag>
+            <div class="drag-handle" cdkDragHandle>
+              <mat-icon>drag_handle</mat-icon>
+            </div>
+          </app-ingredient-row>
+        </div>
+        <button type="button" [matTooltip]="'edit.tooltip.addShortCut' | translate" (click)="addIngredient(false)" color="primary" class="step-app-button" mat-raised-button><mat-icon>add</mat-icon>{{'edit.ingredients.addIngredient' | translate}}</button>
+        <mat-divider class="ingredient-step-divider"></mat-divider>
+        <div class="step-list-container" (keydown.+)="$event.preventDefault(); addStep()">
+          <div class="header-button-container">
+            <h2>{{'generic.step.plural' | translate}}</h2>
+          </div>
+          <div cdkDropList class="step-list" (cdkDropListDropped)="reorderStep($event)">
+            <div class="step-box" *ngFor="let step of steps.controls; let i = index" cdkDrag>
+              <span class="step-number">
+                {{i + 1}}.
+              </span>
+              <div class="drag-handle" cdkDragHandle>
+                <mat-icon>drag_handle</mat-icon>
+              </div>
+              <div class="step-form-field input-with-hint">
+                <mat-form-field>
+                  <mat-label>{{'generic.step.singular' | translate}}</mat-label>
+                  <textarea #stepInput (click)="$event.preventDefault(); $event.stopPropagation()" class="step-textarea" matInput [formControl]="steps.controls[i]" placeholder="{{'edit.steps.placeholder' | translate}}"></textarea>
+                </mat-form-field>
+                <app-input-length-hint [input]="stepInput" [longText]="true"></app-input-length-hint>
+              </div>
+              <div class="remove-step-button-container">
+                <button tabindex="-1" type="button" class="remove-step-button" *ngIf="i > 0" color="warn" mat-mini-fab (click)="removeStep(i)"><mat-icon>close</mat-icon></button>
+              </div>
+            </div>
+          </div>
+          <button type="button" [matTooltip]="'edit.tooltip.addShortCut' | translate" (click)="addStep()" color="primary" class="step-app-button" mat-raised-button><mat-icon>add</mat-icon>{{'edit.steps.addStep' | translate}}</button>
+        </div>
+      </ng-container>
+      <div class="save-button-container">
+        <!-- This is a dummy div so 'save' button ends up on the right even if delete button is not there -->
+        <div class="delete-button-placeholder" *ngIf="!allowedToDelete()"></div>
+        <button type="button" [loading]="saveDeleteInProgress" diameter="30" *ngIf="allowedToDelete()" mat-raised-button color="warn" class="save-button" (click)="deleteRecipe()"><mat-icon>delete</mat-icon>{{'generic.delete' | translate}}</button>
+        <button type="button" [loading]="saveDeleteInProgress" diameter="30" mat-raised-button color="accent" class="save-button" (click)="cancelEdit()"><mat-icon>undo</mat-icon>{{'generic.cancel' | translate}}</button>
+        <button type="button" [loading]="saveDeleteInProgress" diameter="30" mat-raised-button color="primary" [disabled]="!allowToSave()" class="save-button" (click)="saveRecipe()"><mat-icon>send</mat-icon>{{'generic.save' | translate}}</button>
+      </div>
+    </mat-card>
+  </form>
+</div>

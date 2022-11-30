@@ -1,0 +1,435 @@
+@use '~@angular/material' as mat;
+@import "../../../copy-pasta-theme";
+$drop-zone-height: 165px;
+$drop-zone-icon-size: 80px;
+$existing-picture-size: 170px;
+
+.recipe-name-container{
+
+  .recipe-name{
+    width: 90%;
+    font-size: 40px;
+
+    mat-form-field {
+      font-weight: bold;
+    }
+  }
+
+  .labels-chip-list {
+    width: 90%;
+
+    mat-chip {
+      background-color: $accent-color;
+      color: white;
+    }
+  }
+
+  /* common */
+  .ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+  }
+  .ribbon::before,
+  .ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid mat.get-color-from-palette($copy-pasta-primary-palette, 700);
+  }
+  .ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 15px 0;
+    background-color: $primary-color;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    color: #fff;
+    font: 700 18px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .ribbon-top-right {
+    top: -10px;
+    right: -10px;
+  }
+  .ribbon-top-right::before,
+  .ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+  }
+  .ribbon-top-right::before {
+    top: 0;
+    left: 0;
+  }
+  .ribbon-top-right::after {
+    bottom: 0;
+    right: 0;
+  }
+  .ribbon-top-right span {
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg);
+  }
+  .description-container{
+    margin-top: 25px;
+    width: 99%;
+
+    mat-form-field{
+      width: 100%;
+
+      mat-label{
+        font-size: 22px;
+      }
+
+      textarea{
+        height: calc(3 * 18px);
+      }
+    }
+  }
+}
+
+.recipe-details-container{
+  margin-top: 10px;
+
+  .existing-pictures-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($existing-picture-size, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 2rem;
+    margin-bottom: 30px;
+
+    .existing-picture-container {
+      position: relative;
+      width: $existing-picture-size;
+      height: $existing-picture-size;
+
+      .will-delete-container {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .existing-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: .2s ease;
+      background-color: $warn-color;
+    }
+
+    .overlay-undo-delete {
+      background-color: $primary-color;
+    }
+
+    .image-overlay:hover {
+      opacity: 0.8;
+    }
+
+    .overlay-content {
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+
+      mat-icon {
+        font-size: 50px;
+        width: 50px;
+      }
+
+      .undo-delete-icon {
+        transform: rotate(-90deg);
+        position: relative;
+        right: 14px;
+        top: 13px;
+      }
+    }
+  }
+
+  .ingredient-container{
+    margin-top: 10px;
+  }
+
+  .header-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .info-text {
+    mat-icon {
+      position: relative;
+      right: 5px;
+      top: 6px;
+    }
+  }
+
+  .step-app-button {
+    float: right;
+    margin-bottom: 10px;
+
+    mat-icon {
+      position: relative;
+      right: 6px;
+      bottom: 1px;
+    }
+  }
+
+  .ingredient-step-divider {
+    margin-top: 50px;
+  }
+}
+
+// start stuff related to drag&drop - must remain in global context
+.step-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.step-form-field {
+  width: 100%;
+  margin-right: 15px;
+}
+
+.step-number {
+  font-size: 23px;
+  font-weight: 100;
+}
+
+.step-list {
+  width: 100%;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.step-box {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 16px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: white;
+  font-size: 14px;
+}
+
+.drag-handle {
+  padding: 10px;
+  cursor: move;
+  color: #646464;
+  font-weight: bolder;
+  border-radius: 14px;
+  width: 22px;
+  height: 22px;
+
+  mat-icon {
+    position: relative;
+    top: -1px;
+    right: 1px;
+  }
+}
+
+.drag-handle:hover {
+  background-color: #efefef;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  .step-number {
+    opacity: 0;
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.step-box:last-child {
+  border: none;
+}
+
+.step-list.cdk-drop-list-dragging .step-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.step-textarea {
+  height: calc(3 * 16px);
+}
+
+.save-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+
+  .delete-button-placeholder {
+    width: 156px;
+  }
+
+  .save-button {
+    color: white;
+    font-size: 25px;
+    padding: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .mat-icon {
+      margin-right: 7px;
+      margin-bottom: 4px;
+    }
+  }
+}
+// end stuff related to drag&drop - must remain in global context
+
+.upload-drop-zone {
+  width: 100%;
+  height: $drop-zone-height;
+  border: 2px dashed $primary-color;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .text-icon-container {
+    .text-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .large-text {
+      font-size: 1.6em;
+    }
+
+    .upload-icon {
+      margin-left: 30%;
+      margin-top: 11px;
+      width: auto;
+      height: auto;
+      padding-right: $drop-zone-icon-size;
+      font-size: $drop-zone-icon-size;
+      color: $primary-color;
+    }
+  }
+}
+
+.upload-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .name-with-chips {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .warn-chip-list {
+      margin-left: 4px;
+
+      mat-chip {
+        color: white;
+        font-size: 0.8em;
+        pointer-events: none;
+      }
+
+      .chip-warn {
+        background-color: $warn-color;
+      }
+
+      .chip-primary {
+        background-color: $primary-color;
+      }
+    }
+  }
+
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    flex-grow: 2;
+
+    .upload-status-icon {
+      margin-left: 5px;
+    }
+
+    .upload-successful {
+      color: $primary-color;
+    }
+
+    .upload-failed {
+      color: $warn-color;
+    }
+  }
+
+  div {
+    word-break: break-word;
+  }
+
+  .buttons-container {
+    display: flex;
+    margin-left: 8px;
+
+    .edit-image-button {
+      mat-icon {
+        position: relative;
+        bottom: 2px;
+        right: 5px;
+      }
+    }
+
+    .delete-button {
+      margin-left: 4px;
+      min-width: 96px;
+      mat-icon {
+        position: relative;
+        bottom: 1px;
+        right: 4px;
+      }
+    }
+
+    .button-highlight {
+      color: white;
+    }
+  }
+}
+

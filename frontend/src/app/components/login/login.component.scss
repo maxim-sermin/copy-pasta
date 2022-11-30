@@ -1,0 +1,286 @@
+@use '~@angular/material' as mat;
+@import "../../../variables";
+@import "../../../copy-pasta-theme";
+
+$horizontal-margin: 50px;
+$form-width: 343px;
+$logo-size: 280px;
+$ribbon-height: 60px;
+
+.login-page-container {
+  display: flex;
+  width: 100%;
+  height: calc(100% - ((#{$toolbar-height}) + (#{$toolbar-margin-bottom})));
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-form-field {
+  min-width: $form-width;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card {
+  padding-left: $horizontal-margin;
+  padding-right: $horizontal-margin;
+}
+
+.login-progress {
+  position: relative;
+  top: 16px;
+  margin-left: -$horizontal-margin;
+  padding-right: calc(#{$horizontal-margin} * 2);
+  height: 5px;
+}
+
+.login-row {
+  display: flex;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(#{$logo-size} + #{$ribbon-height} + 30px);
+  z-index: 0; // make all ribbon parts visible
+}
+
+@media screen and (max-width: $mobile-start-width) {
+  .login-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.login-logo {
+  width: $logo-size;
+  height: $logo-size;
+}
+
+.fade-content {
+  transition: 1s;
+  opacity: 0;
+}
+
+.login-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.login-divider {
+  margin-left: $horizontal-margin;
+  margin-right: $horizontal-margin;
+}
+
+.login-header {
+  font-weight: 500;
+  font-size: 1.6em;
+  margin-bottom: 30px;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  height: 2em; // reserve 2 lines for long german words
+  color: white;
+  background-color: $warn-color;
+  visibility: hidden;
+  margin-bottom: 15px;
+  width: $form-width;
+
+  span {
+    word-wrap: break-word;
+  }
+}
+
+.login-register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .biometric-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .biometric-container {
+      display: flex;
+      align-items: center;
+
+      span {
+        padding-top: 2px;
+        margin-left: 6px;
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .biometric-login-button {
+    margin-top: 20px;
+
+    mat-icon {
+      position: relative;
+      right: 5px;
+      bottom: 1px;
+    }
+  }
+}
+
+
+// ### ribbon stuff ###
+
+.ribbon-placeholder {
+  height: $ribbon-height;
+}
+
+.ribbon {
+  width: 80%;
+  height: $ribbon-height;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  color: #fff;
+  font: 18px/60px sans-serif;
+  font-weight: lighter;
+  text-align: center;
+  background-color: $primary-color;
+  margin-bottom: 16px;
+
+  -webkit-animation: main 350ms;
+  -moz-animation: main 350ms;
+  -ms-animation: main 350ms;
+  animation: main 350ms;
+}
+
+.ribbon i {
+  position: absolute;
+}
+
+.ribbon i:first-child, .ribbon i:nth-child(2) {
+  position: absolute;
+  left: -20px;
+  bottom: -20px;
+  z-index: -1;
+  border: 20px solid transparent;
+  border-right-color: mat.get-color-from-palette($copy-pasta-primary-palette, 900);
+
+  -webkit-animation: edge 800ms;
+  -moz-animation: edge 800ms;
+  -ms-animation: edge 800ms;
+  animation: edge 800ms;
+}
+
+.ribbon i:nth-child(2) {
+  left: auto;
+  right: -20px;
+  border-right-color: transparent;
+  border-left-color: mat.get-color-from-palette($copy-pasta-primary-palette, 900);
+}
+
+.ribbon i:nth-child(3), .ribbon i:last-child {
+  width: 20px;
+  bottom: -20px;
+  left: -60px;
+  z-index: -2;
+  border: 30px solid mat.get-color-from-palette($copy-pasta-primary-palette, 700);
+  border-left-color: transparent;
+
+  -webkit-animation: back 1200ms;
+  -moz-animation: back 1200ms;
+  -ms-animation: back 1200ms;
+  animation: back 1200ms;
+
+  -webkit-transform-origin: 100% 0;
+  -moz-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+}
+
+.ribbon i:last-child {
+  bottom: -20px;
+  left: auto;
+  right: -60px;
+  border: 30px solid mat.get-color-from-palette($copy-pasta-primary-palette, 700);
+  border-right-color: transparent;
+
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+.ribbon-fade {
+  background-color: white;
+  transition: 1s;
+}
+
+p {
+  text-align: center;
+  color: #aaa;
+}
+
+/* animations */
+
+@-webkit-keyframes main {
+  0% { -webkit-transform: scaleX(0); }
+  100% { -webkit-transform: scaleX(1); }
+}
+
+@-webkit-keyframes edge {
+  0%, 50% { -webkit-transform: scaleY(0); }
+  100% { -webkit-transform: scaleY(1); }
+}
+
+@-webkit-keyframes back {
+  0%, 75% { -webkit-transform: scaleX(0); }
+  100% { -webkit-transform: scaleX(1); }
+}
+
+
+@-moz-keyframes main {
+  0% { -moz-transform: scaleX(0); }
+  100% { -moz-transform: scaleX(1); }
+}
+
+@-moz-keyframes edge {
+  0%, 50% { -moz-transform: scaleY(0); }
+  100% { -moz-transform: scaleY(1); }
+}
+
+@-moz-keyframes back {
+  0%, 75% { -moz-transform: scaleX(0); }
+  100% { -moz-transform: scaleX(1); }
+}
+
+
+@keyframes main {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes edge {
+  0%, 50% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes back {
+  0%, 75% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+

@@ -1,0 +1,66 @@
+@import "~src/copy-pasta-theme";
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+
+  .carousel-button-icon {
+    position: relative;
+    bottom: 1px;
+  }
+
+  .carousel-left-button-icon {
+    right: 1px;
+  }
+
+  .carousel-content-circles {
+    margin-left: 40px;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    app-smooth-progress-bar {
+      height: 6px;
+      width: 100%;
+      position: relative;
+    }
+
+    .circle-container {
+      margin-top: 23px;
+      display: flex;
+
+      .circle {
+        cursor: pointer;
+        margin-left: 6px;
+        margin-right: 6px;
+        border: 1px solid $primary-color;
+        height: 11px;
+        width: 11px;
+
+        border-radius:50%;
+        -moz-border-radius:50%;
+        -webkit-border-radius:50%;
+      }
+
+      .circle-filled {
+        background-color: $primary-color;
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 6000px;
+    }
+
+    .carousel-wrapper {
+      overflow: hidden;
+    }
+
+    .carousel-inner {
+      display: flex;
+    }
+  }
+}

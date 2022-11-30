@@ -1,0 +1,368 @@
+{
+  "app": {
+    "hi": "Moin",
+    "logout": "Abmelden",
+    "newRecipe": "Rezept anlegen"
+  },
+  "datePipe": {
+    "ago": "vor",
+    "in": "in",
+    "intervals": {
+      "day": {
+        "plural": "Tagen",
+        "singular": "Tag"
+      },
+      "hour": {
+        "plural": "Stunden",
+        "singular": "Stunde"
+      },
+      "minute": {
+        "plural": "Minuten",
+        "singular": "Minute"
+      },
+      "month": {
+        "plural": "Monaten",
+        "singular": "Monat"
+      },
+      "second": {
+        "plural": "Sekunden",
+        "singular": "Sekunde"
+      },
+      "week": {
+        "plural": "Wochen",
+        "singular": "Woche"
+      },
+      "year": {
+        "plural": "Jahren",
+        "singular": "Jahr"
+      }
+    },
+    "justNow": "gerade eben"
+  },
+  "edit": {
+    "banner": {
+      "change": "Ändern",
+      "new": "Neu"
+    },
+    "description": {
+      "label": "Beschreibung",
+      "placeholder": "Dieses alte Familienrezept habe ich beim Aufräumen zwischen den Sofakissen gefunden..."
+    },
+    "dialogs": {
+      "ingredientDelete": {
+        "body": "Du hast die Zutat die du löschen willst schon bearbeitet",
+        "title": "Zutat wirklich löschen?"
+      },
+      "recipeDelete": {
+        "title": "Rezept wirklich löschen?"
+      },
+      "stepDelete": {
+        "body": "Du hast den Schritt den du löschen willst schon bearbeitet",
+        "title": "Schritt wirklich löschen?"
+      }
+    },
+    "ingredients": {
+      "addIngredient": "Zutat hinzufügen",
+      "amount": "Menge",
+      "hintPrefix": "In den",
+      "hintSuffix": "kannst zu Links zu Quellen für die Zutaten hinzufügen",
+      "servings": "Portionen"
+    },
+    "labels": {
+      "placeholder": "vegan"
+    },
+    "pictures": {
+      "buttons": {
+        "edit": "Bearbeiten",
+        "remove": "Entfernen"
+      },
+      "chips": {
+        "duplicate": "doppelt",
+        "edited": "bearbeitet",
+        "tooLarge": "zu groß"
+      },
+      "existing": "Bereits hochgeladene Bilder",
+      "new": "Neue Bilder hinzufügen",
+      "willDelete": "Wird gelöscht"
+    },
+    "snack": {
+      "duplicateRecipe": {
+        "prefix": "Es gibt schon ein Rezept mit dem Namen",
+        "suffix": "- bitte gebe einen anderen Namen ein"
+      },
+      "pictureUpload": "Deine Fotos werden hochgeladen - bitte Seite offen lassen"
+    },
+    "steps": {
+      "addStep": "Schritt hinzufügen",
+      "placeholder": "Möhren schälen"
+    },
+    "title": {
+      "label": "Titel"
+    },
+    "tooltip": {
+      "addShortCut": "Tipp: Du kannst auch die '+' Taste drücken"
+    }
+  },
+  "generic": {
+    "account": "Profil",
+    "backButtonTooltip": "Zurück zur Übersicht",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "couldNotDelete": {
+      "plural": "konnten nicht gelöscht werden",
+      "singular": "konnte nicht gelöscht werden"
+    },
+    "couldNotLoad": {
+      "plural": "konnten nicht geladen werden",
+      "singular": "konnte nicht geladen werden"
+    },
+    "couldNotSave": {
+      "plural": "konnten nicht gespeichert werden",
+      "singular": "konnte nicht gespeichert werden"
+    },
+    "couldNotUpdate": {
+      "plural": "konnten nicht aktualisiert werden",
+      "singular": "konnte nicht aktualisiert werden"
+    },
+    "couldNotUpload": {
+      "plural": "konnten nicht hochgeladen werden",
+      "singular": "konnte nicht hochgeladen werden"
+    },
+    "delete": "Löschen",
+    "done": "Fertig",
+    "edit": "ändern",
+    "example": "z.B.",
+    "ingredient": {
+      "plural": "Zutaten",
+      "singular": "Zutat"
+    },
+    "label": {
+      "plural": "Label",
+      "singular": "Label"
+    },
+    "new": "neu",
+    "noUndo": "Kann nicht wieder rückgängig gemacht werden",
+    "notOk": "Schade",
+    "ok": "OK",
+    "optional": "Optional",
+    "password": "Passwort",
+    "passwordHint": "Muss mindestens 8 Zeichen lang sein",
+    "picture": {
+      "plural": "Bilder",
+      "singular": "Bild"
+    },
+    "profilePicture": "Profilbild",
+    "recipe": {
+      "plural": "Rezepte",
+      "singular": "Rezept"
+    },
+    "recipeExample": "Kichererbsenbolognese",
+    "save": "Speichern",
+    "settings": "Einstellungen",
+    "step": {
+      "plural": "Schritte",
+      "singular": "Schritt"
+    },
+    "toTaste": "Nach Geschmack",
+    "unit": {
+      "plural": "Einheiten",
+      "singular": "Einheit"
+    },
+    "update": "Aktualisieren",
+    "updated": "Aktualisiert",
+    "upload": "Hochladen",
+    "user": {
+      "plural": "Benutzer",
+      "singular": "Benutzer"
+    },
+    "username": "Benutzername",
+    "wasAdded": {
+      "plural": "wurden erfolgreich hinzugefügt",
+      "singular": "wurde erfolgreich hinzugefügt"
+    },
+    "wasDeleted": {
+      "plural": "wurden erfolgreich gelöscht",
+      "singular": "wurde erfolgreich gelöscht"
+    },
+    "wasSaved": {
+      "plural": "wurden erfolgreich gespeichert",
+      "singular": "wurde erfolgreich gespeichert"
+    },
+    "wasUpdated": {
+      "plural": "wurden erfolgreich aktualisiert",
+      "singular": "wurde erfolgreich aktualisiert"
+    },
+    "wasUploaded": {
+      "plural": "wurden erfolgreich hochgeladen",
+      "singular": "wurde erfolgreich hochgeladen"
+    }
+  },
+  "imageEditor": {
+    "originalSize": "der Originalgröße",
+    "quality": "Qualität",
+    "resolution": "Auflösung",
+    "rotation": "Rotation",
+    "size": "Größe"
+  },
+  "login": {
+    "errors": {
+      "enterCreds": "Benutzername und Passwort eingeben",
+      "genericError": "Es ist etwas schief gelaufen, bitte versuche es später nochmal",
+      "unavailable": "Konnte den Server nicht erreichen, bitte versuche es später nochmal",
+      "wrongCreds": "Benutzername oder Passwort falsch (Groß- / Kleinschreibung beachten)"
+    },
+    "loginButton": "Anmelden",
+    "loginButtonBiometric": "Mit Biometrie anmelden",
+    "title": "Login",
+    "biometric": {
+      "toggle": "Biometrie speichern",
+      "promptSubTitle": "Authentifiziere dich zum Anmelden",
+      "verifyError": "Biometrie konnte nicht verifiziert werden",
+      "storeError": "Biometrie-Daten konnten nicht gespeichert werden",
+      "notAvailable": "Biometrische Funktionen sind nicht verfügbar",
+      "storePromptSubTitle": "Authentifiziere dich um Biometrie-Daten zu speichern"
+    }
+  },
+  "notFound": {
+    "safety": "Bring mich in Sicherheit!",
+    "title": "Dies ist nicht die Seite nach der du suchst"
+  },
+  "overview": {
+    "infiniteScroll": {
+      "loadMore": "Mehr laden",
+      "reachedEnd": "du hast das Ende des Internets erreicht"
+    },
+    "search": {
+      "advancedCheck": "Erweitert",
+      "advancedLabel": "Erweiterte Suche",
+      "advancedPlaceholder": "schnell oder Möhren",
+      "button": "Suchen",
+      "label": "Suche",
+      "noSuggestions": "Ich habs einfach nicht",
+      "sort": {
+        "ascending": "Aufsteigend",
+        "by": "nach",
+        "descending": "Absteigend",
+        "options": {
+          "date": "Datum",
+          "likes": "Likes"
+        }
+      }
+    },
+    "snack": {
+      "ingredientSuggestions": "Zutatenvorschläge",
+      "labelSuggestions": "Labelvorschläge",
+      "recipeSuggestions": "Vorschläge für Rezeptnamen"
+    }
+  },
+  "recipe": {
+    "comments": {
+      "comment": "Kommentar",
+      "commentButton": "Kommentieren",
+      "dialog": {
+        "delete": {
+          "title": "Kommentar wirklich löschen?"
+        }
+      },
+      "doComment": {
+        "past": "kommentierte",
+        "present": "kommentiert"
+      },
+      "label": "Schreibe einen Kommentar",
+      "placeholder": "Gerade eben gekocht und muss sagen schmeckt echt überragend!",
+      "rightNow": "jetzt gerade",
+      "snack": {
+        "couldNotPost": "konnte nicht gepostet werden"
+      },
+      "somebody": "Jemand"
+    },
+    "createdTooltip": "Erstellt von",
+    "fullScreenTooltip": "Vollbild öffnen"
+  },
+  "routeGuard": {
+    "dialog": {
+      "body": "Du hast Änderungen auf dieser Seite gemacht die verloren gehen",
+      "title": "Änderungen verwerfen und Seite wechseln?"
+    }
+  },
+  "serverSleep": {
+    "back": "Server wieder da, toll",
+    "letsGo": "Los geht's!",
+    "normal": "Server schläft - ich wecke ihn auf",
+    "overtime": "Das dauert länger als sonst"
+  },
+  "settings": {
+    "dialog": {
+      "deleteAccount": {
+        "title": "Profil wirklich löschen?"
+      },
+      "deleteProfilePicture": {
+        "body": "Ist dann halt für immer weg",
+        "title": "Profilbild wirklich löschen?"
+      },
+      "updateIngredients": {
+        "body": "Alle vorherigen Werte werden mit den neuen überschrieben",
+        "title": "Eingetragene Zutaten wirklich aktualisieren?"
+      }
+    },
+    "ingredients": {
+      "linkPlaceholder": "Link für Zutat",
+      "listIngredients": "Liste der eingetragenen Zutaten",
+      "namePlaceholder": "Name der Zutat",
+      "openLink": "Link im neuen Fenster öffnen",
+      "title": "Eingetragene Zutaten bearbeiten"
+    },
+    "myAccount": {
+      "deleteAccount": {
+        "button": "Ich will diese Webseite nie wieder benutzen",
+        "title": "Profil löschen"
+      },
+      "password": {
+        "changePassword": "Passwort ändern",
+        "newPassword": "Neues Passwort",
+        "savePassword": "Passwort speichern"
+      },
+      "profilePicture": {
+        "changeProfilePicture": "Profilbild ändern",
+        "offset": {
+          "horizontal": "Horizontal",
+          "title": "Verschiebung",
+          "vertical": "Vertikal"
+        }
+      },
+      "title": "Mein Profil verwalten",
+      "username": {
+        "changeUsername": "Benutzername ändern",
+        "newUsername": "Neuer Benutzername",
+        "saveUsername": "Benutzername speichern"
+      },
+      "biometric": {
+        "deleteButton": "Biometrie-Daten löschen",
+        "promptSubTitle": "Authentifiziere dich zum Löschen",
+        "snack": {
+          "deleteSuccess": "Biometrie-Daten erfolgreich gelöscht",
+          "deleteFail": "Biometrie-Daten konnten nicht gelöscht werden"
+        }
+      }
+    },
+    "otherAccounts": {
+      "addUserButton": "Benutzer anlegen",
+      "data": "Daten für neuen Benutzer",
+      "existing": "bereits registrierte Benutzer",
+      "initial": {
+        "form1": "Initialer",
+        "form2": "Initiales"
+      },
+      "title": "Weitere Benutzer hinzufügen"
+    },
+    "snack": {
+      "alreadyTaken": "ist bereits vergeben",
+      "profilePictureUpload": "Profilbild wird hochgeladen - bitte Seite offen lassen"
+    }
+  },
+  "trickyConfirmDialog": {
+    "hint": "Genau wie oben eintippen",
+    "prefix": "Zum Bestätigen",
+    "suffix": "eingeben"
+  }
+}

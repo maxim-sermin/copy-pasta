@@ -1,0 +1,170 @@
+<div class="global-page-container">
+  <mat-card class="settings-container">
+    <div class="header-back-container">
+      <app-back-button></app-back-button>
+      <h1>{{'generic.settings' | translate}}</h1>
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel class="own-account-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{'settings.myAccount.title' | translate}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div>
+          <h2>{{'settings.myAccount.username.changeUsername' | translate}}</h2>
+          <div class="username-identicon-container">
+            <form [formGroup]="newUserNameForm" class="change-username-container">
+              <div class="new-user-name-field input-with-hint">
+                <mat-form-field>
+                  <mat-label>{{'settings.myAccount.username.newUsername' | translate}}</mat-label>
+                  <input #changeUsernameInput matInput formControlName="userName" [placeholder]="authenticationService.authenticatedUser ? authenticationService.authenticatedUser.name : null">
+                </mat-form-field>
+                <app-input-length-hint [input]="changeUsernameInput"></app-input-length-hint>
+              </div>
+              <button (click)="changeUsername()" color="primary" class="wide-button name-save-button" [disabled]="newUserNameForm.value.userName.length < 1 || !newUserNameForm.valid" mat-raised-button><mat-icon>save</mat-icon>{{'settings.myAccount.username.saveUsername' | translate}}</button>
+            </form>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div>
+          <h2>{{'settings.myAccount.profilePicture.changeProfilePicture' | translate}}</h2>
+          <div class="picture-with-upload">
+            <div *ngIf="authenticationService.profilePicture">
+              <button type="button" color="warn" mat-raised-button class="delete-image-button" (click)="deleteProfilePicture()"><mat-icon>delete</mat-icon>{{'generic.delete' | translate}}</button>
+            </div>
+            <div *ngIf="profilePicture" class="offset-sliders-container">
+              {{'settings.myAccount.profilePicture.offset.title' | translate}}
+              <div class="slider-container">
+                <span>{{'settings.myAccount.profilePicture.offset.horizontal' | translate}}</span>
+                <mat-slider min="0" max="100" step="1" [(ngModel)]="authenticationService.authenticatedUser.picOffsetX"></mat-slider>
+              </div>
+              <div class="slider-container">
+                <span>{{'settings.myAccount.profilePicture.offset.vertical' | translate}}</span>
+                <mat-slider min="0" max="100" step="1" [(ngModel)]="authenticationService.authenticatedUser.picOffsetY"></mat-slider>
+              </div>
+            </div>
+            <svg *ngIf="authenticationService.authenticatedUser && !authenticationService.authenticatedUser.pic && !profilePicture" [data-jdenticon-value]="authenticationService.authenticatedUser.id">
+              {{authenticationService.authenticatedUser.name}}
+            </svg>
+            <mat-spinner *ngIf="authenticationService.authenticatedUser && authenticationService.authenticatedUser.pic && !authenticationService.profilePicture" diameter="100"></mat-spinner>
+            <div [style.display]="authenticationService.profilePicture || profilePicture ? 'block' : 'none'" class="profile-picture-container">
+              <img #profilePreview [style.object-position]="applicationService.getProfilePictureOffsetSafe(authenticationService.authenticatedUser)" [style.transform]="applicationService.getProfilePictureRotationSafe(authenticationService.authenticatedUser)" [src]="authenticationService.profilePicture"/>
+            </div>
+            <div class="picture-upload-area">
+              <input type="file" (change)="handleFileInput($event.target.files)" [accept]="ACCEPT_IMAGE_TYPES.join(',')">
+              <div class="buttons-container" *ngIf="profilePicture">
+                <button type="button" color="accent" mat-raised-button class="edit-image-button" (click)="openImageEditorDialog()" [disabled]="profilePictureUploadRunning"><mat-icon>edit</mat-icon>{{'edit.pictures.buttons.edit' | translate}}</button>
+                <button type="button" color="primary" mat-raised-button class="edit-image-button" (click)="uploadProfilePicture()" [disabled]="profilePicture.isTooLarge || profilePictureUploadRunning" ><mat-icon>send</mat-icon>{{'generic.upload' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div>
+          <h2>{{'settings.myAccount.password.changePassword' | translate}}</h2>
+          <button *ngIf="biometricStored" color="accent" class="wide-button delete-account-button delete-biometric" mat-raised-button (click)="deleteBiometric()"><mat-icon>delete</mat-icon>{{'settings.myAccount.biometric.deleteButton' | translate}}<mat-icon class="biometric-icon">fingerprint</mat-icon></button>
+          <form [formGroup]="newPasswordForm" class="change-password-container">
+            <mat-form-field>
+              <app-toggle-password #ownNewPwToggle matSuffix></app-toggle-password>
+              <input matInput [placeholder]="'settings.myAccount.password.newPassword' | translate" [type]="ownNewPwToggle.type" required
+                     formControlName="newPassword">
+              <mat-hint>{{'generic.passwordHint' | translate}}</mat-hint>
+            </mat-form-field>
+            <button (click)="changePassword()" color="primary" class="wide-button name-save-button" [disabled]="!newPasswordForm.valid" mat-raised-button><mat-icon>save</mat-icon>{{'settings.myAccount.password.savePassword' | translate}}</button>
+          </form>
+        </div>
+        <mat-divider></mat-divider>
+        <h2>{{'settings.myAccount.deleteAccount.title' | translate}}</h2>
+        <button color="warn" class="wide-button delete-account-button" mat-raised-button (click)="deleteAccount()"><mat-icon>delete</mat-icon>{{'settings.myAccount.deleteAccount.button' | translate}}</button>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="handleUsersPanelOpened()" class="create-account-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>group_add</mat-icon>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{'settings.otherAccounts.title' | translate}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="expansion-content">
+          <h2>{{'settings.otherAccounts.data' | translate}}</h2>
+          <form [formGroup]="addNewUserForm" class="new-user-container">
+            <div class="input-with-hint">
+              <mat-form-field>
+                <input #newUserNameInput matInput [placeholder]="('settings.otherAccounts.initial.form1' | translate) + ' ' + ('generic.username' | translate)" required
+                       formControlName="userName">
+              </mat-form-field>
+              <app-input-length-hint [input]="newUserNameInput"></app-input-length-hint>
+            </div>
+            <div class="input-with-hint">
+              <mat-form-field>
+                <app-toggle-password #newPwToggle matSuffix></app-toggle-password>
+                <input matInput [placeholder]="('settings.otherAccounts.initial.form2' | translate) + ' ' + ('generic.password' | translate)" [type]="newPwToggle.type" required
+                       formControlName="password">
+                <mat-hint>{{'generic.passwordHint' | translate}}</mat-hint>
+              </mat-form-field>
+            </div>
+            <button (click)="addNewUser()" color="primary" class="wide-button add-new-user-button" [disabled]="!addNewUserForm.valid" mat-raised-button><mat-icon>add_circle_outline</mat-icon>{{'settings.otherAccounts.addUserButton' | translate}}</button>
+          </form>
+          <h2>{{allUsers.length}} {{'settings.otherAccounts.existing' | translate}}</h2>
+          <mat-list>
+            <mat-list-item matRipple class="existing-user-line" *ngFor="let user of allUsers; last as last">
+              <div class="existing-user-line-container">
+                <app-profile-picture [user]="user" [sizePixels]="70"></app-profile-picture>
+                <span class="username">{{user.name}}</span>
+              </div>
+              <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="handleIngredientPanelOpened()" class="manage-ingredients-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>spa</mat-icon>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{'settings.ingredients.title' | translate}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="expansion-content">
+          <h2>{{'settings.ingredients.listIngredients' | translate}}</h2>
+          <mat-list class="existing-ingredient-list">
+            <div class="existing-ingredient" *ngFor="let ingredient of ingredientNames.controls; index as i">
+              <mat-list-item>
+                <div class="input-with-hint">
+                  <mat-form-field>
+                    <input #changeIngredientNameInput matInput [placeholder]="'settings.ingredients.namePlaceholder' | translate" required [formControl]="ingredientNames.controls[i]">
+                  </mat-form-field>
+                  <app-input-length-hint [input]="changeIngredientNameInput"></app-input-length-hint>
+                </div>
+                <div class="ingredient-source-field input-with-hint">
+                  <mat-form-field>
+                    <input #changeIngredientSourceInput matInput [placeholder]="'settings.ingredients.linkPlaceholder' | translate" [formControl]="ingredientSources.controls[i]">
+                  </mat-form-field>
+                  <app-input-length-hint [input]="changeIngredientSourceInput" [longText]="true"></app-input-length-hint>
+                </div>
+              </mat-list-item>
+              <div class="open-ingredient-link-placeholder" *ngIf="!ingredientSources.controls[i].value">
+              </div>
+              <button mat-icon-button *ngIf="ingredientSources.controls[i].value" (click)="openLinkInNewWindow(ingredientSources.controls[i].value)" [matTooltip]="'settings.ingredients.openLink' | translate">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+            </div>
+          </mat-list>
+          <button [disabled]="!ingredientNames.valid || !ingredientSources.valid" class="existing-ingredients-save-button" color="primary" mat-raised-button (click)="updateExistingIngredients()">
+            <mat-icon>save</mat-icon>
+            {{'generic.update' | translate}}
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</div>

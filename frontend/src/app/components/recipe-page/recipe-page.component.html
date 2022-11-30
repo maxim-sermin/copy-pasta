@@ -1,0 +1,85 @@
+<div class="global-page-container">
+  <mat-card class="recipe-container">
+    <div class="edit-and-header-container">
+      <div class="icon-title-chips-container">
+        <div class="back-and-picture-container">
+          <app-back-button></app-back-button>
+          <app-profile-picture class="recipe-creator-profile-picture" [user]="currentRecipe.createdBy" [sizePixels]="114" [matTooltip]="('recipe.createdTooltip' | translate) + ' ' + currentRecipe.createdBy.name" *ngIf="currentRecipe.createdBy"></app-profile-picture>
+        </div>
+        <div class="header-container">
+          <h1>{{currentRecipe.name}}</h1>
+          <mat-chip-list class="chip-list">
+            <mat-chip *ngFor="let label of currentRecipe.labels">{{label.name}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+
+      <div class="meta-container">
+        <div class="icon-and-text">
+          <span [matTooltip]="currentRecipe.lastModifiedAt | date:'HH:mm:ss dd.MM.yyyy'">{{'generic.updated' | translate}} {{currentRecipe.lastModifiedAt | dateAgo}}</span>
+        </div>
+        <button class="edit-button" mat-fab color="primary" [routerLink]="['/edit', currentRecipe.id]">
+          <mat-icon>{{!currentRecipe.createdBy || currentRecipe.createdBy.id === authenticationService.authenticatedUser.id ? 'edit' : 'add_a_photo'}}</mat-icon>
+        </button>
+        <div class="like-container">
+          <app-like-button *ngIf="likeStatus !== undefined" [likeStatus]="likeStatus" (click)="handleLike()"></app-like-button>
+          <span *ngIf="amountLikes !== undefined">{{amountLikes}}</span>
+        </div>
+      </div>
+    </div>
+    <app-carousel class="carousel" *ngIf="currentRecipe !== null && currentRecipe.pics && currentRecipe.pics.length > 0">
+      <ng-container *ngFor="let image of currentRecipe.pics; let i = index">
+        <div *carouselItem>
+          <div class="carousel-image-uploader-container">
+            <app-profile-picture *ngIf="image.uploadedBy" [user]="image.uploadedBy" [sizePixels]="50"></app-profile-picture>
+          </div>
+          <img class="carousel-image" [style.transform]="'rotate(' + currentRecipe.pics[i].rotation + 'deg)'" [src]="imagesToShow[i]" *ngIf="imagesToShow[i] !== null" (click)="openImageFullscreen();" [matTooltip]="'recipe.fullScreenTooltip' | translate" matTooltipPosition="above"/>
+        </div>
+      </ng-container>
+    </app-carousel>
+    <div *ngIf="currentRecipe.description && currentRecipe.description.length > 0" class="description-container">
+      <p [innerHTML]="currentRecipe.description | linkify" class="description-text">
+      </p>
+    </div>
+    <div class="list-and-text-container">
+      <div class="ingredient-container">
+        <div class="inner-container">
+          <h2>{{'generic.ingredient.plural' | translate}}</h2>
+          <mat-list class="required-ingredient-list">
+            <ng-container *ngFor="let quantity of currentRecipe.quantities; last as last">
+              <mat-list-item *ngIf="!quantity.optional" matRipple class="ingredient-row">
+                <app-ingredient-line [quantity]="quantity"></app-ingredient-line>
+              </mat-list-item>
+            </ng-container>
+          </mat-list>
+          <span *ngIf="hasRecipeOptionalIngredients()" class="optional-header">{{'generic.optional' | translate}}</span>
+          <mat-list class="optional-ingredient-list">
+            <ng-container *ngFor="let quantity of currentRecipe.quantities; last as last">
+              <mat-list-item *ngIf="quantity.optional" matRipple class="ingredient-row">
+                <app-ingredient-line [quantity]="quantity"></app-ingredient-line>
+              </mat-list-item>
+            </ng-container>
+          </mat-list>
+        </div>
+      </div>
+      <mat-divider vertical></mat-divider>
+      <div class="steps-container">
+        <div class="inner-container">
+          <h2>{{'generic.step.plural' | translate}}</h2>
+          <mat-list>
+            <mat-list-item matRipple [class.step-row-divider]="!last" class="step-row" *ngFor="let step of currentRecipe.steps; last as last">
+              <div class="step-container">
+                <span>{{step.ordering + 1}}.&nbsp;</span>
+                <span [innerHTML]="step.description | linkify"></span>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="comments-card">
+    <app-comment #commentFormPlaceholder (commentAdded)="handleCommentAdded($event)" [editMode]="true"></app-comment>
+    <app-comment *ngFor="let comment of currentRecipe.comments" [existingComment]="comment" (commentUpdated)="handleCommentUpdated($event)" (commentDeleted)="handleCommentDeleted($event)" [commentUpdatedResponse]="commentUpdated"></app-comment>
+  </mat-card>
+</div>
